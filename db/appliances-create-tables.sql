@@ -21,85 +21,17 @@ create type status as enum (
 );
 
 
--- common table to store all the good_ids
+-- tables
+
 create table if not exists good (
-    good_id int primary key,
-    good_type appliance not null,
-    unique (good_id, good_type)  -- need this to be able to have FK referencing to this pair
-);
-
-
--- empty table to inherit from
-create table if not exists good_prototype (
-    good_id serial not null,
+    good_id serial primary key,
     good_type appliance not null,
     price numeric not null check (price > 0),
     company varchar(50) check (company != ''),
     assembly_place varchar(50) check (assembly_place != ''),
-    quantity int not null check (quantity >= 0) default 1
+    quantity int not null check (quantity >= 0) default 1,
+    characteristics jsonb 
 );
-
-
--- tables for specific goods
-
-create table if not exists coffee_maker (
-    primary key (good_id),
-    check (good_type = 'coffee_maker'),
-    foreign key (good_id, good_type) references good (good_id, good_type)
-) inherits (good_prototype);
-
-alter table coffee_maker alter column good_type set default 'coffee_maker';
-
-create table if not exists cooktop (
-    primary key (good_id),
-    check (good_type = 'cooktop'),
-    foreign key (good_id, good_type) references good (good_id, good_type)
-) inherits (good_prototype);
-
-alter table cooktop alter column good_type set default 'cooktop';
-
-create table if not exists fridge (
-    primary key (good_id),
-    check (good_type = 'fridge'),
-    foreign key (good_id, good_type) references good (good_id, good_type)
-) inherits (good_prototype);
-
-alter table fridge alter column good_type set default 'fridge';
-
-create table if not exists microwave (
-    primary key (good_id),
-    check (good_type = 'microwave'),
-    foreign key (good_id, good_type) references good (good_id, good_type)
-) inherits (good_prototype);
-
-alter table microwave alter column good_type set default 'microwave';
-
-create table if not exists tv (
-    primary key (good_id),
-    check (good_type = 'tv'),
-    foreign key (good_id, good_type) references good (good_id, good_type)
-) inherits (good_prototype);
-
-alter table tv alter column good_type set default 'tv';
-
-create table if not exists vacuum_cleaner (
-    primary key (good_id),
-    check (good_type = 'vacuum_cleaner'),
-    foreign key (good_id, good_type) references good (good_id, good_type)
-) inherits (good_prototype);
-
-alter table vacuum_cleaner alter column good_type set default 'vacuum_cleaner';
-
-create table if not exists washer (
-    primary key (good_id),
-    check (good_type = 'washer'),
-    foreign key (good_id, good_type) references good (good_id, good_type)
-) inherits (good_prototype);
-
-alter table washer alter column good_type set default 'washer';
-
-
--- tables for users and orders
 
 create table if not exists "user" (
     user_id serial primary key,
