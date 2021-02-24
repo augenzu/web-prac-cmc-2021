@@ -1,11 +1,14 @@
 # Практикум по Web-технологиям
 
-### **Интернет-магазин бытовой техники**  
+#### **Интернет-магазин бытовой техники**  
 -------------------------------------
 
 ## Схема базы данных приложения
 
 ![ER](images/er.png)
+
+* ***appliance*** - перечислимый тип, возможные значения: *{ 'coffee_maker', 'cooktop', 'fridge', 'microwave', 'tv', 'vacuum_cleaner', 'washer' }* (при необходимости можно добавить новые)  
+* ***status*** - перечислимый тип; возможные значения: *{ 'complete', 'delivered', 'processing' }*
 
 ## Описание страниц сайта
 
@@ -31,3 +34,30 @@
 Также на **Main page** можно перейти со всех страниц, кроме страниц редактирования и удаления, а также страниц, связанных с оформлением заказа (то есть переход осуществляется cо страниц **Goods page**, **Good info page**, **Users page**, **User info page**, **Orders page** и **Order info page**).  
 
 ## Сценарии использования
+Стрелкой (→) обозначается переход на другую страницу, дефисом (-) страница соединяется с кнопкой/ссылкой, которая на ней находится.
+* **Добавление нового клиента**  
+    *Main page - Users → Users page - Add user*
+* **Удаление клиента**  
+    *Main page - Users → Users page - Search panel → User info page - Delete*
+* **Получение данных о клиенте (в т. ч. список сделанных им заказов**  
+    *Main page - Users → Users page - Search panel → User info page*
+* **Редактирование данных о клиенте**  
+    *Main page - Users → Users page - Search panel → User info page - Edit*
+* **Добавление нового товара**  
+    *Main page - Goods → Goods page - Add good*
+* **Удаление товара**  
+    *Main page - Goods → Goods page - Search panel → Good info page - Delete*
+* **Получение данных о товаре (в частности, информации о наличии и цене товара)**  
+    *Main page - Goods → Goods page - Search panel → Good info page*
+* **Редактирование данных о товаре**  
+    *Main page - Goods → Goods page - Search panel → Good info page - Edit*
+* **Оформление заказа**  
+    *Main page - Orders → Orders page - Checkout → Checkout page*
+    1. *- Specify user*
+    2. *- Add item → Item selection page - Search panel → Checkout page*
+    3. *повторять пункт 2 до тех пор, пока не добавлены все необходимые товары*
+    4. *- Checkout*
+* **Проверка статуса заказа**  
+    *Main page - Orders → Orders page - Order info page*
+* **Получение списка товаров по типам (производителям, характеристикам и т. д.)**  
+    *Main page - Goods → Goods page - Search panel*
