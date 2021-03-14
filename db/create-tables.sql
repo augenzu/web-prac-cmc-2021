@@ -51,7 +51,7 @@ create table if not exists "order" (
   order_time timestamp not null,
   order_status status_type not null,
   order_delivery_address varchar(50) not null check (order_delivery_address != ''),
-  order_delivery_time date
+  order_delivery_date date
 );
 
 create table if not exists order_good (
