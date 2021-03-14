@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
 
-    <groupId>com.github.augenzu</groupId>
-    <artifactId>appliances</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+  <groupId>com.github.augenzu</groupId>
+  <artifactId>appliances</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
 
-    <name>Appliances Online Store</name>
+  <name>Appliances Online Store</name>
 
 	<url>https://github.com/augenzu/web-prac-cmc-2021</url>
 
@@ -32,128 +32,156 @@
 	</developers>
 
 
-    <properties>
+  <properties>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <sql-maven-plugin.version>1.5</sql-maven-plugin.version>
-        <postgresql.version>42.2.19</postgresql.version>
+		<!-- <maven.compiler.source>1.8</maven.compiler.source>
+  	<maven.compiler.target>1.8</maven.compiler.target> -->
+		<maven.compiler.release>9</maven.compiler.release>
 
-        <postgresql.driver>org.postgresql.Driver</postgresql.driver>
-        <postgresql.host>localhost</postgresql.host>
-        <postgresql.port>5432</postgresql.port>
-        <postgresql.database.postgres>postgres</postgresql.database.postgres>
-        <postgresql.database.appliances>appliances</postgresql.database.appliances>
-        <postgresql.username>postgres</postgresql.username>
-        <postgresql.password>jSetvxar</postgresql.password>
+		<!-- <maven-enforcer-plugin.version>3.0</maven-enforcer-plugin.version>
+		<maven.version>3.6.6</maven.version> -->
 
-        <project.db.dir>${project.basedir}/db</project.db.dir>
-        <create-db.script>${project.db.dir}/create-db.sql</create-db.script>
-        <create-tables.script>${project.db.dir}/create-tables.sql</create-tables.script>
-        <populate-db.script>${project.db.dir}/populate-db.sql</populate-db.script>
-        <drop-db.script>${project.db.dir}/drop-db.sql</drop-db.script>
+	  <sql-maven-plugin.version>1.5</sql-maven-plugin.version>
+  	<postgresql.version>42.2.19</postgresql.version>
 
-    </properties>
+    <postgresql.driver>org.postgresql.Driver</postgresql.driver>
+    <postgresql.host>localhost</postgresql.host>
+    <postgresql.port>5432</postgresql.port>
+    <postgresql.database.postgres>postgres</postgresql.database.postgres>
+    <postgresql.database.appliances>appliances</postgresql.database.appliances>
+    <postgresql.username>postgres</postgresql.username>
+    <postgresql.password>jSetvxar</postgresql.password>
 
+    <project.db.dir>${project.basedir}/db</project.db.dir>
+    <create-db.script>${project.db.dir}/create-db.sql</create-db.script>
+    <create-tables.script>${project.db.dir}/create-tables.sql</create-tables.script>
+    <populate-db.script>${project.db.dir}/populate-db.sql</populate-db.script>
+    <drop-db.script>${project.db.dir}/drop-db.sql</drop-db.script>
 
-    <build>
-        <plugins>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sql-maven-plugin</artifactId>
-                <version>${sql-maven-plugin.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>${postgresql.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <driver>${postgresql.driver}</driver>
-                    <username>${postgresql.username}</username>
-                    <password>${postgresql.password}</password>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>drop-db</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <autocommit>true</autocommit>
-                            <url>
-                                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.postgres}
-                            </url>
-                            <srcFiles>
-                                <srcFile>${drop-db.script}</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>create-db</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-							<autocommit>true</autocommit>
-                            <url>
-                                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.postgres}
-                            </url>
-                            <srcFiles>
-                                <srcFile>${create-db.script}</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>create-tables</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <url>
-                                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.appliances}
-                            </url>
-                            <srcFiles>
-                                <srcFile>${create-tables.script}</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>populate-db</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <url>
-                                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.appliances}
-                            </url>
-                            <srcFiles>
-                                <srcFile>${populate-db.script}</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
+  </properties>
 
 
-    <dependencies>
+  <build>
+    <plugins>
 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>${maven-enforcer-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>${maven.version}</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin> -->
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>sql-maven-plugin</artifactId>
+        <version>${sql-maven-plugin.version}</version>
+        <dependencies>
+          <dependency>
+         		<groupId>org.postgresql</groupId>
+          	<artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
-        </dependency>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <driver>${postgresql.driver}</driver>
+          <username>${postgresql.username}</username>
+          <password>${postgresql.password}</password>
+        </configuration>
+        <executions>
+          <execution>
+            <id>drop-db</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <autocommit>true</autocommit>
+              <url>
+                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.postgres}
+              </url>
+              <srcFiles>
+                <srcFile>${drop-db.script}</srcFile>
+              </srcFiles>
+            </configuration>
+          </execution>
+          <execution>
+            <id>create-db</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+							<autocommit>true</autocommit>
+              <url>
+                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.postgres}
+              </url>
+              <srcFiles>
+                <srcFile>${create-db.script}</srcFile>
+              </srcFiles>
+            </configuration>
+          </execution>
+          <execution>
+            <id>create-tables</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <url>
+                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.appliances}
+              </url>
+              <srcFiles>
+                <srcFile>${create-tables.script}</srcFile>
+              </srcFiles>
+            </configuration>
+          </execution>
+          <execution>
+            <id>populate-db</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <url>
+                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.appliances}
+              </url>
+              <srcFiles>
+                <srcFile>${populate-db.script}</srcFile>
+              </srcFiles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-    </dependencies>
+    </plugins>
+  </build>
+
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
+    </dependency>
+
+  </dependencies>
 
 
 </project>
