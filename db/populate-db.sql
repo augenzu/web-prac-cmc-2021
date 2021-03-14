@@ -1,5 +1,7 @@
 begin;
-insert into good (type, name, price, company, assembly_place, quantity, characteristics, description)
+insert into good (good_type, good_name,
+    good_price, good_company, good_assembly_place,
+    good_quantity, good_characteristics, good_description)
 values
   ('coffee_maker', 'Cuisinart DCC3200W',
   	99.95, 'Cuisinart', 'China', 33,
@@ -55,7 +57,7 @@ values
 commit;
 
 begin;
-insert into "user" (name, address, number, email)
+insert into "user" (user_name, user_address, user_number, user_email)
 values
   ('Marcia J. Wardle', '1681 Goldcliff Circle, Washington, DC 20032', '1-202-561-9265', 'MarciaJWardle@armyspy.com'),
   ('Laura M. McKnight', '947 Jerome Avenue, Harlingen, TX 78550dddddd', '1-956-263-6424', 'LauraMMcKnight@dayrep.com '),
@@ -69,7 +71,7 @@ values
 commit;
 
 begin;
-insert into "order" (user_id, ordering_time, current_status, delivery_address, delivery_time)
+insert into "order" (user_id, order_time, order_status, order_delivery_address, order_delivery_time)
 values
   (2, '2021-01-03 16:57', 'delivered', '947 Jerome Avenue, Harlingen, TX 78550dddddd', '2021-02-02'),
   (2, '2021-02-10 16:08', 'processing', '947 Jerome Avenue, Harlingen, TX 78550dddddd', null),
@@ -80,7 +82,7 @@ values
 commit;
 
 begin;
-insert into order_good (order_id, good_id, quantity)
+insert into order_good (order_id, good_id, order_good_quantity)
 values
   (1, 1, 3),
   (1, 4, 1),
