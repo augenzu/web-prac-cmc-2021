@@ -36,12 +36,10 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<!-- <maven.compiler.source>1.8</maven.compiler.source>
-  	<maven.compiler.target>1.8</maven.compiler.target> -->
-		<maven.compiler.release>9</maven.compiler.release>
+		<maven.compiler.source>8</maven.compiler.source>
+  	<maven.compiler.target>8</maven.compiler.target>
 
-		<!-- <maven-enforcer-plugin.version>3.0</maven-enforcer-plugin.version>
-		<maven.version>3.6.6</maven.version> -->
+		<maven.version>3.6.3</maven.version>
 
 	  <sql-maven-plugin.version>1.5</sql-maven-plugin.version>
   	<postgresql.version>42.2.19</postgresql.version>
@@ -60,32 +58,15 @@
     <populate-db.script>${project.db.dir}/populate-db.sql</populate-db.script>
     <drop-db.script>${project.db.dir}/drop-db.sql</drop-db.script>
 
+    <hibernate-entitymanager.version>5.4.29.Final</hibernate-entitymanager.version>
+    <hibernate-core.version>5.4.29.Final</hibernate-core.version>
+    <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
+
   </properties>
 
 
   <build>
     <plugins>
-
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>${maven-enforcer-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>enforce-maven</id>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<requireMavenVersion>
-									<version>${maven.version}</version>
-								</requireMavenVersion>
-							</rules>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> -->
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -179,6 +160,24 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>${postgresql.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>${hibernate-entitymanager.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate-core.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
+      <version>${hibernate-annotations.version}</version>
     </dependency>
 
   </dependencies>
