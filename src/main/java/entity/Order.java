@@ -55,7 +55,7 @@ public class Order implements Serializable {
 	}
 
 	@Column(name = "order_time", nullable = false)
-	// @Temporal
+	@Temporal(TemporalType.TIMESTAMP)
 	public void setTime(Timestamp time) {
 		this.time = time;
 	}
@@ -79,7 +79,7 @@ public class Order implements Serializable {
 	}
 
 	@Column(name = "order_delivery_date")
-	// @Temporal
+	@Temporal(TemporalType.DATE)
 	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
