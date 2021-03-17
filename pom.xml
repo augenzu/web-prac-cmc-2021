@@ -32,10 +32,20 @@
 	</developers>
 
 
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <!-- <version>${spring-boot.version}</version> -->
+    <version>2.4.3</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+
   <properties>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+    <java.version>1.8</java.version>
 		<maven.compiler.source>8</maven.compiler.source>
   	<maven.compiler.target>8</maven.compiler.target>
 
@@ -61,6 +71,8 @@
     <hibernate-entitymanager.version>5.4.29.Final</hibernate-entitymanager.version>
     <hibernate-core.version>5.4.29.Final</hibernate-core.version>
     <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
+
+    <spring-boot.version>2.4.3</spring-boot.version>
 
   </properties>
 
@@ -150,12 +162,28 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot.version}</version>
+     </plugin>
+
     </plugins>
   </build>
 
 
   <dependencies>
 
+  <!-- unchecked! -->
+
+    <!-- <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
+    </dependency> -->
+
+  <!-- unchecked! -->
+    
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -167,17 +195,33 @@
       <artifactId>hibernate-entitymanager</artifactId>
       <version>${hibernate-entitymanager.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
       <version>${hibernate-core.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-annotations</artifactId>
       <version>${hibernate-annotations.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <version>${spring-boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <version>${spring-boot.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version>${spring-boot.version}</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
