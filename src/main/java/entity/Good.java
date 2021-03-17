@@ -104,6 +104,7 @@ public class Good implements Serializable {
 		this.quantity = quantity;
 	}
 
+	@Lob
 	@Column(name = "good_characteristics")
 	public String getCharacteristics() {
 		return characteristics;
@@ -113,6 +114,7 @@ public class Good implements Serializable {
 		this.characteristics = characteristics;
 	}
 
+	@Lob
 	@Column(name = "good_description")
 	public String getDescription() {
 		return description;
