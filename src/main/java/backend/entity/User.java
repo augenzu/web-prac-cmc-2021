@@ -1,4 +1,4 @@
-package entity;
+package backend.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,16 +8,30 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@Column(name = "user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "user_name", nullable = false, length = 70)
 	private String name;
+
+	@Column(name = "user_address", nullable = false, length = 50)
 	private String address;
+
+	@Column(name = "user_email", nullable = false, length = 30)
 	private String email;
+
+	@Column(name = "user_number", length = 20)
 	private String number;
 
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "user_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Set<Order> orders = new HashSet<Order>();
 
 	public User() {}
@@ -38,14 +52,10 @@ public class User implements Serializable {
 		orders.remove(order);
 	}
 
-	@Id
-	@Column(name = "user_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
 
-	@Column(name = "user_name", nullable = false, length = 70)
 	public String getName() {
 		return name;
 	}
@@ -54,7 +64,6 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "user_address", nullable = false, length = 50)
 	public String getAddress() {
 		return address;
 	}
@@ -63,7 +72,6 @@ public class User implements Serializable {
 		this.address = address;
 	}
 
-	@Column(name = "user_email", nullable = false, length = 30)
 	public String getEmail() {
 		return email;
 	}
@@ -72,7 +80,6 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "user_number", length = 20)
 	public String getNumber() {
 		return number;
 	}
@@ -81,9 +88,6 @@ public class User implements Serializable {
 		this.number = number;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "user_id")
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	public Set<Order> getOrders() {
 		return orders;
 	}
@@ -93,7 +97,7 @@ public class User implements Serializable {
 	}
 
 	@Override
-  public int hashCode() {
+ 	public int hashCode() {
 		final int prime = 31;
 
 		int result = 1;

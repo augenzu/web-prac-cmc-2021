@@ -1,6 +1,6 @@
-package entity;
+package backend.entity;
 
-import type.ApplianceType;
+import backend.type.ApplianceType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,21 +12,47 @@ import java.util.Set;
 public class Good implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@Column(name = "good_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@Column(name = "good_type", nullable = false)
 	private ApplianceType type;
+
+	@Column(name = "good_name", nullable = false, length = 100)
 	private String name;
+
+	@Column(name = "good_price", nullable = false)
 	private Double price;
+
+	@Column(name = "good_company", length = 50)
 	private String company;
+
+	@Column(name = "good_assembly_place", length = 50)
 	private String assemblyPlace;
+
+	@Column(name = "good_quantity", nullable = false)
 	private Integer quantity;
+
+	@Lob
+	@Column(name = "good_characteristics")
 	private String characteristics;
+
+	@Lob
+	@Column(name = "good_description")
 	private String description;
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "order_good",
+			joinColumns = @JoinColumn(name = "good_id"),
+			inverseJoinColumns = @JoinColumn(name = "order_id")
+	)
 	private Set<Order> orders = new HashSet<Order>();
 
 	public Good() {}
     
-  public Good(ApplianceType type, String name,
+  	public Good(ApplianceType type, String name,
       Double price, String company, String assemblyPlace,
       Integer quantity, String characteristics, String description) {
 		this.type = type;
@@ -47,19 +73,14 @@ public class Good implements Serializable {
 		orders.remove(order);
 	}
 
-	@Id
-	@Column(name = "good_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getId() {
 		return id;
 	}
 
-	@Column(name = "good_type", nullable = false)
 	public ApplianceType getType() {
 		return type;
 	}
 
-	@Column(name = "good_name", nullable = false, length = 100)
 	public String getName() {
 		return name;
 	}
@@ -68,7 +89,6 @@ public class Good implements Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "good_price", nullable = false)
 	public Double getPrice() {
 		return price;
 	}
@@ -77,7 +97,6 @@ public class Good implements Serializable {
 		this.price = price;
 	}
 
-	@Column(name = "good_company", length = 50)
 	public String getCompany() {
 		return company;
 	}
@@ -86,7 +105,6 @@ public class Good implements Serializable {
 		this.company = company;
 	}
 
-	@Column(name = "good_assembly_place", length = 50)
 	public String getAssemblyPlace() {
 		return assemblyPlace;
 	}
@@ -95,7 +113,6 @@ public class Good implements Serializable {
 		this.assemblyPlace = assemblyPlace;
 	}
 
-	@Column(name = "good_quantity", nullable = false)
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -104,8 +121,6 @@ public class Good implements Serializable {
 		this.quantity = quantity;
 	}
 
-	@Lob
-	@Column(name = "good_characteristics")
 	public String getCharacteristics() {
 		return characteristics;
 	}
@@ -114,8 +129,6 @@ public class Good implements Serializable {
 		this.characteristics = characteristics;
 	}
 
-	@Lob
-	@Column(name = "good_description")
 	public String getDescription() {
 		return description;
 	}
@@ -124,11 +137,6 @@ public class Good implements Serializable {
 		this.description = description;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "order_good",
-			joinColumns = @JoinColumn(name = "good_id"),
-			inverseJoinColumns = @JoinColumn(name = "order_id")
-	)
 	public Set<Order> getOrders() {
 		return orders;
 	}
@@ -138,7 +146,7 @@ public class Good implements Serializable {
 	}
 
 	@Override
-  public int hashCode() {
+  	public int hashCode() {
 		final int prime = 31;
 
 		int result = 1;

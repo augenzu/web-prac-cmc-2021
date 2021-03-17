@@ -1,6 +1,6 @@
-package entity;
+package backend.entity;
 
-import type.StatusType;
+import backend.type.StatusType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,18 +12,39 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "order")
+@Table(name = "\"order\"")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@Column(name = "order_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "order_time", nullable = false)
+	// @Temporal(TemporalType.TIMESTAMP)
 	private Timestamp time;
+
+	@Column(name = "order_status", nullable = false)
 	private StatusType status;
+
+	@Column(name = "order_delivery_address", nullable = false, length = 50)
 	private String deliveryAddress;
+
+	@Column(name = "order_delivery_date")
+	// @Temporal(TemporalType.DATE)
 	private Date deliveryDate;
 
+	@ManyToOne()
+	@JoinColumn(name = "user_id")
 	private User user;
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	@JoinTable(name = "order_good",
+			joinColumns = @JoinColumn(name = "order_id"),
+			inverseJoinColumns = @JoinColumn(name = "good_id")
+	)
 	private Set<Good> goods = new HashSet<Good>();
 
 	public Order() {}
@@ -43,9 +64,6 @@ public class Order implements Serializable {
 		goods.remove(good);
 	}
 
-	@Id
-	@Column(name = "order_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -54,13 +72,10 @@ public class Order implements Serializable {
 		return time;
 	}
 
-	@Column(name = "order_time", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
 	public void setTime(Timestamp time) {
 		this.time = time;
 	}
 
-	@Column(name = "order_status", nullable = false)
 	public StatusType getStatus() {
 		return status;
 	}
@@ -69,7 +84,6 @@ public class Order implements Serializable {
 		this.status = status;
 	}
 
-	@Column(name = "order_delivery_address", nullable = false, length = 50)
 	public String getDeliveryAddress() {
 		return deliveryAddress;
 	}
@@ -78,8 +92,6 @@ public class Order implements Serializable {
 		this.deliveryAddress = deliveryAddress;
 	}
 
-	@Column(name = "order_delivery_date")
-	@Temporal(TemporalType.DATE)
 	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
@@ -88,8 +100,8 @@ public class Order implements Serializable {
 		this.deliveryDate = deliveryDate;
 	}
 
-	@ManyToOne()
-	@JoinColumn(name = "user_id")
+	// @ManyToOne()
+	// @JoinColumn(name = "user_id")
 	public User getUser() {
 		return user;
 	}
@@ -98,12 +110,6 @@ public class Order implements Serializable {
 		this.user = user;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL)  // cannot find orphanRemoval
-	@OnDelete(action=OnDeleteAction.CASCADE)
-	@JoinTable(name = "order_good",
-			joinColumns = @JoinColumn(name = "order_id"),
-			inverseJoinColumns = @JoinColumn(name = "good_id")
-	)
 	public Set<Good> getGoods() {
 		return goods;
 	}
@@ -113,7 +119,7 @@ public class Order implements Serializable {
 	}
 
 	@Override
-  public int hashCode() {
+  	public int hashCode() {
 		final int prime = 31;
 
 		int result = 1;
@@ -125,8 +131,8 @@ public class Order implements Serializable {
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		result = prime * result + ((goods == null) ? 0 : goods.hashCode());
 		
-    return result;
-  }
+		return result;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
