@@ -16,7 +16,7 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private long id;
+	private Long id;
 	private Timestamp time;
 	private StatusType status;
 	private String deliveryAddress;
@@ -46,7 +46,7 @@ public class Order implements Serializable {
 	@Id
 	@Column(name = "order_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -110,5 +110,76 @@ public class Order implements Serializable {
 
 	public void setGoods(Set<Good> goods) {
 			this.goods = goods;
+	}
+
+	@Override
+  public int hashCode() {
+		final int prime = 31;
+
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((time == null) ? 0 : time.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((deliveryAddress == null) ? 0 : deliveryAddress.hashCode());
+		result = prime * result + ((deliveryDate == null) ? 0 : deliveryDate.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((goods == null) ? 0 : goods.hashCode());
+		
+    return result;
+  }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+
+		Order other = (Order) obj;
+
+		if ((id == null && other.id != null)
+				|| !id.equals(other.id)) {
+			return false;
+		}
+		if ((time == null && other.time != null)
+				|| !time.equals(other.time)) {
+			return false;
+		}
+		if ((status == null && other.status != null)
+				|| !status.equals(other.status)) {
+			return false;
+		}
+		if ((deliveryAddress == null && other.deliveryAddress != null)
+				|| !deliveryAddress.equals(other.deliveryAddress)) {
+			return false;
+		}
+		if ((deliveryDate == null && other.deliveryDate != null)
+				|| !deliveryDate.equals(other.deliveryDate)) {
+			return false;
+		}
+		if ((user == null && other.user != null)
+				|| !user.equals(other.user)) {
+			return false;
+		}
+		if ((goods == null && other.goods != null)
+				|| !goods.equals(other.goods)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		String str =  "User{id=" + id
+				+ ", time=" + time
+				+ ", status=" + status
+				+ ", deliveryAddress=" + deliveryAddress
+				+ ", deliveryDate=" + deliveryDate
+				+ ", user=" + user.toString()
+				+ ", goods=" + goods.toString()
+				+ "}";
+		return str;
 	}
 }

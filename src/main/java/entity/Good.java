@@ -12,13 +12,13 @@ import java.util.Set;
 public class Good implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private long id;
+	private Long id;
 	private ApplianceType type;
 	private String name;
-	private double price;
+	private Double price;
 	private String company;
 	private String assemblyPlace;
-	private int quantity;
+	private Integer quantity;
 	private String characteristics;
 	private String description;
 
@@ -27,8 +27,8 @@ public class Good implements Serializable {
 	public Good() {}
     
   public Good(ApplianceType type, String name,
-      double price, String company, String assemblyPlace,
-      int quantity, String characteristics, String description) {
+      Double price, String company, String assemblyPlace,
+      Integer quantity, String characteristics, String description) {
 		this.type = type;
 		this.name = name;
 		this.price = price;
@@ -69,11 +69,11 @@ public class Good implements Serializable {
 	}
 
 	@Column(name = "good_price", nullable = false)
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
@@ -96,11 +96,11 @@ public class Good implements Serializable {
 	}
 
 	@Column(name = "good_quantity", nullable = false)
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
@@ -133,5 +133,94 @@ public class Good implements Serializable {
 
 	public void setOrders(Set<Order> orders) {
 			this.orders = orders;
+	}
+
+	@Override
+  public int hashCode() {
+		final int prime = 31;
+
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((company == null) ? 0 : company.hashCode());
+		result = prime * result + ((assemblyPlace == null) ? 0 : assemblyPlace.hashCode());
+		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
+		result = prime * result + ((characteristics == null) ? 0 : characteristics.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
+		
+    return result;
+  }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+
+		Good other = (Good) obj;
+
+		if ((id == null && other.id != null)
+				|| !id.equals(other.id)) {
+			return false;
+		}
+		if ((type == null && other.type != null)
+				|| !type.equals(other.type)) {
+			return false;
+		}
+		if ((name == null && other.name != null)
+				|| !name.equals(other.name)) {
+			return false;
+		}
+		if ((price == null && other.price != null)
+				|| !price.equals(other.price)) {
+			return false;
+		}
+		if ((company == null && other.company != null)
+				|| !company.equals(other.company)) {
+			return false;
+		}
+		if ((assemblyPlace == null && other.assemblyPlace != null)
+				|| !assemblyPlace.equals(other.assemblyPlace)) {
+			return false;
+		}
+		if ((quantity == null && other.quantity != null)
+				|| !quantity.equals(other.quantity)) {
+			return false;
+		}
+		if ((characteristics == null && other.characteristics != null)
+				|| !characteristics.equals(other.characteristics)) {
+			return false;
+		}
+		if ((description == null && other.description != null)
+				|| !description.equals(other.description)) {
+			return false;
+		}
+		if ((orders == null && other.orders != null)
+				|| !orders.equals(other.orders)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		String str =  "User{id=" + id
+				+ ", type=" + type
+				+ ", name=" + name
+				+ ", price=" + price
+				+ ", company=" + company
+				+ ", assemblyPlace=" + assemblyPlace
+				+ ", quantity=" + quantity
+				+ ", characteristics=" + characteristics
+				+ ", description=" + description
+				+ ", orders=" + orders.toString()
+				+ "}";
+		return str;
 	}
 }
