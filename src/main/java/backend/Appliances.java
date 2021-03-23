@@ -1,10 +1,14 @@
 package backend;
 
+import backend.entity.AppType;
 import backend.entity.Good;
 import backend.entity.Order;
+import backend.entity.Status;
 import backend.entity.User;
+import backend.service.AppTypeService;
 import backend.service.GoodService;
 import backend.service.OrderService;
+import backend.service.StatusService;
 import backend.service.UserService;
 
 import java.sql.ResultSet;
@@ -20,6 +24,7 @@ import org.springframework.context.event.EventListener;
 public class Appliances {
 	@Autowired
 	private UserService userService;
+	private AppTypeService appTypeService;
 
   	public static void main(String[] args) {
 		SpringApplication.run(Appliances.class, args);
@@ -36,6 +41,8 @@ public class Appliances {
 		
 		userService.saveUser(user);
 
-		userService.findAll().forEach(it->System.out.println(it.getEmail()));
+		userService.findAll().forEach(it->System.out.println(it));
+
+		// appTypeService.findAll().forEach(it->System.out.println(it));
 	}
 }
