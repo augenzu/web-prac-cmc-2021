@@ -7,9 +7,6 @@
 
 ![ER](images/er.png)
 
-* ***appliance_type*** - перечислимый тип, возможные значения: *{ 'coffee_maker', 'cooktop', 'fridge', 'microwave', 'tv', 'vacuum_cleaner', 'washer' }* (при необходимости можно добавить новые)  
-* ***status_type*** - перечислимый тип; возможные значения: *{ 'complete', 'delivered', 'processing' }*
-
 ## Описание страниц сайта
 
 ### Схема навигации между страницами:
