@@ -108,8 +108,8 @@ public class User implements Serializable {
 		result = prime * result + ((number == null) ? 0 : number.hashCode());
 		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
 		
-    return result;
-  }
+		return result;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

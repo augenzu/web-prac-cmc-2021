@@ -1,7 +1,5 @@
 package backend.entity;
 
-import backend.type.ApplianceType;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -17,8 +15,9 @@ public class Good implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name = "good_type", nullable = false)
-	private ApplianceType type;
+	@ManyToOne()
+	@JoinColumn(name = "app_type_id")
+	private AppType app_type;
 
 	@Column(name = "good_name", nullable = false, length = 100)
 	private String name;
@@ -52,10 +51,10 @@ public class Good implements Serializable {
 
 	public Good() {}
     
-  	public Good(ApplianceType type, String name,
+  	public Good(AppType app_type, String name,
       Double price, String company, String assemblyPlace,
       Integer quantity, String characteristics, String description) {
-		this.type = type;
+		this.app_type = app_type;
 		this.name = name;
 		this.price = price;
 		this.company = company;
@@ -77,8 +76,12 @@ public class Good implements Serializable {
 		return id;
 	}
 
-	public ApplianceType getType() {
-		return type;
+	public AppType getAppType() {
+		return app_type;
+	}
+
+	public void setAppType(AppType app_type) {
+		this.app_type = app_type;
 	}
 
 	public String getName() {
@@ -151,7 +154,7 @@ public class Good implements Serializable {
 
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((app_type == null) ? 0 : app_type.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((company == null) ? 0 : company.hashCode());
@@ -179,8 +182,8 @@ public class Good implements Serializable {
 				|| !id.equals(other.id)) {
 			return false;
 		}
-		if ((type == null && other.type != null)
-				|| !type.equals(other.type)) {
+		if ((app_type == null && other.app_type != null)
+				|| !app_type.equals(other.app_type)) {
 			return false;
 		}
 		if ((name == null && other.name != null)
@@ -221,7 +224,7 @@ public class Good implements Serializable {
 	@Override
 	public String toString() {
 		String str =  "User{id=" + id
-				+ ", type=" + type
+				+ ", app_type=" + app_type
 				+ ", name=" + name
 				+ ", price=" + price
 				+ ", company=" + company

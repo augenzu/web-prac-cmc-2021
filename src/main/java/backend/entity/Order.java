@@ -1,7 +1,5 @@
 package backend.entity;
 
-import backend.type.StatusType;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -25,8 +23,9 @@ public class Order implements Serializable {
 	// @Temporal(TemporalType.TIMESTAMP)
 	private Timestamp time;
 
-	@Column(name = "order_status", nullable = false)
-	private StatusType status;
+	@ManyToOne()
+	@JoinColumn(name = "app_type_id")
+	private Status status;
 
 	@Column(name = "order_delivery_address", nullable = false, length = 50)
 	private String deliveryAddress;
@@ -49,7 +48,7 @@ public class Order implements Serializable {
 
 	public Order() {}
 
-	public Order(Timestamp time, StatusType status, String deliveryAddress, Date deliveryDate) {
+	public Order(Timestamp time, Status status, String deliveryAddress, Date deliveryDate) {
 		this.time = time;
 		this.status = status;
 		this.deliveryAddress = deliveryAddress;
@@ -76,11 +75,11 @@ public class Order implements Serializable {
 		this.time = time;
 	}
 
-	public StatusType getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusType status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
@@ -100,8 +99,6 @@ public class Order implements Serializable {
 		this.deliveryDate = deliveryDate;
 	}
 
-	// @ManyToOne()
-	// @JoinColumn(name = "user_id")
 	public User getUser() {
 		return user;
 	}
