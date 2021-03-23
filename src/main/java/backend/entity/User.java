@@ -156,7 +156,7 @@ public class User implements Serializable {
 				+ ", address=" + address
 				+ ", email=" + email
 				+ ", number=" + number
-				+ ", orders=" + orders.toString()
+				// + ", orders=" + orders.toString()
 				+ "}";
 		return str;
 	}

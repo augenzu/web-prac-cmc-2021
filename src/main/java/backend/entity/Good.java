@@ -17,7 +17,7 @@ public class Good implements Serializable {
 	
 	@ManyToOne()
 	@JoinColumn(name = "app_type_id")
-	private AppType app_type;
+	private AppType appType;
 
 	@Column(name = "good_name", nullable = false, length = 100)
 	private String name;
@@ -51,10 +51,10 @@ public class Good implements Serializable {
 
 	public Good() {}
     
-  	public Good(AppType app_type, String name,
+  	public Good(AppType appType, String name,
       Double price, String company, String assemblyPlace,
       Integer quantity, String characteristics, String description) {
-		this.app_type = app_type;
+		this.appType = appType;
 		this.name = name;
 		this.price = price;
 		this.company = company;
@@ -77,11 +77,11 @@ public class Good implements Serializable {
 	}
 
 	public AppType getAppType() {
-		return app_type;
+		return appType;
 	}
 
-	public void setAppType(AppType app_type) {
-		this.app_type = app_type;
+	public void setAppType(AppType appType) {
+		this.appType = appType;
 	}
 
 	public String getName() {
@@ -154,7 +154,7 @@ public class Good implements Serializable {
 
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((app_type == null) ? 0 : app_type.hashCode());
+		result = prime * result + ((appType == null) ? 0 : appType.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((company == null) ? 0 : company.hashCode());
@@ -182,8 +182,8 @@ public class Good implements Serializable {
 				|| !id.equals(other.id)) {
 			return false;
 		}
-		if ((app_type == null && other.app_type != null)
-				|| !app_type.equals(other.app_type)) {
+		if ((appType == null && other.appType != null)
+				|| !appType.equals(other.appType)) {
 			return false;
 		}
 		if ((name == null && other.name != null)
@@ -224,7 +224,7 @@ public class Good implements Serializable {
 	@Override
 	public String toString() {
 		String str =  "User{id=" + id
-				+ ", app_type=" + app_type
+				+ ", appType=" + appType
 				+ ", name=" + name
 				+ ", price=" + price
 				+ ", company=" + company
@@ -232,7 +232,7 @@ public class Good implements Serializable {
 				+ ", quantity=" + quantity
 				+ ", characteristics=" + characteristics
 				+ ", description=" + description
-				+ ", orders=" + orders.toString()
+				// + ", orders=" + orders.toString()
 				+ "}";
 		return str;
 	}

@@ -24,7 +24,7 @@ public class Order implements Serializable {
 	private Timestamp time;
 
 	@ManyToOne()
-	@JoinColumn(name = "app_type_id")
+	@JoinColumn(name = "status_id")
 	private Status status;
 
 	@Column(name = "order_delivery_address", nullable = false, length = 50)
@@ -181,7 +181,7 @@ public class Order implements Serializable {
 				+ ", deliveryAddress=" + deliveryAddress
 				+ ", deliveryDate=" + deliveryDate
 				+ ", user=" + user.toString()
-				+ ", goods=" + goods.toString()
+				// + ", goods=" + goods.toString()
 				+ "}";
 		return str;
 	}
