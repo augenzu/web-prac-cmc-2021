@@ -1,13 +1,33 @@
 begin;
-insert into good (good_type, good_name,
+insert into app_type (app_type_name)
+values
+  ('coffee_maker'),
+  ('cooktop'),
+  ('fridge'),
+  ('microwave'),
+  ('tv'),
+  ('vacuum_cleaner'),
+  ('washer');
+commit;
+
+begin;
+insert into "status" (status_name)
+values
+  ('complete'),
+  ('delivered'),
+  ('processing');
+commit;
+
+begin;
+insert into good (app_type_id, good_name,
     good_price, good_company, good_assembly_place,
     good_quantity, good_characteristics, good_description)
 values
-  ('coffee_maker', 'Cuisinart DCC3200W',
+  (1, 'Cuisinart DCC3200W',
   	99.95, 'Cuisinart', 'China', 33,
     '{"Width": 9.00, "Height": 14.00, "Depth": 7.75}',
     'Cuisinart DCC-3200W 14-Cup PerfecTemp Programmable Coffeemaker, in White'),
-  ('cooktop', 'Professional Series 36 Inch Gas Sealed Burner Cooktop',
+  (2, 'Professional Series 36 Inch Gas Sealed Burner Cooktop',
     249.75, 'Dacor', 'Germany', 20,
     '{"Series": "Professional", "Width": 36, "Cutout Width": 33.625,
     "Cutout Depth": 19.625, "Cutout Height": 40.450, "Control Type": "Knobs"}',
@@ -15,7 +35,7 @@ values
     Sabbath Mode, SimmerSear Burners, Perma-Flame, SmartFlame, 
     Die-Cast Knobs with Illumina Indicator Lights, 
     PermaClean Bead Blasted Finish in Stainless Steel'),
-  ('fridge', 'Contemporary Series 36 Inch Stainless Steel Counter Depth French Door Refrigerator',
+  (3, 'Contemporary Series 36 Inch Stainless Steel Counter Depth French Door Refrigerator',
     3499.00, 'Fisher Paykel', 'Finnland', 4,
     '{"Series": "Contemporary", "Width": 35.625, "Height": 70.5, "Depth": 27.0625,
     "Type": "Freestanding", "Style": "French Door"}',
@@ -23,18 +43,18 @@ values
     Depth 4 Door French Door Refrigerator with 19 cu. ft. Total Capacity, 4 Glass Shelves, 
     3.45 cu. ft. Freezer Capacity, External Water Dispenser, Crisper Drawer, Frost Free Defrost, 
     Ice Maker, ActiveSmart Foodcare, Ice Maker, Variable Temperature Zone in Stainless Steel'),
-  ('microwave', '30 Inch Stainless Steel Over the Range 1.7 cu. ft. Capacity Microwave Oven',
+  (4, '30 Inch Stainless Steel Over the Range 1.7 cu. ft. Capacity Microwave Oven',
     343.85, 'Whirlpool', 'Germany', 13,
     '{"Width": 29.9375, "Height": 17.125, "Depth": 15.5625, "Style": "Over the Range",
     "CFM": 300, "Cooking Watts": 1000}',
     'Whirlpool 30 Inch Over the Range Microwave Oven with 1.7 cu. ft. Capacity, 1000 Cooking Watts, 
     Convertible Venting, 300 CFM, Add 30 Seconds in Stainless Steel'),
-  ('tv', 'Samsung UN50TU7000FXZA',
+  (5, 'Samsung UN50TU7000FXZA',
     399.00, 'Samsung', 'China', 57,
     '{"Type": "LED", "Width": 44, "Height": 25.4, "Depth": 2.4, "HD": "4K", "Smart TV": "Yes"}',
     'Samsung UN50TU7000FXZA 50" TU7000 Crystal UHD 4K Smart TV with Crystal Processor 4K, 
     Boundless Design and HDR in Black'),
-  ('vacuum_cleaner', 'Ball Animal 2 Bagless Upright Vacuum',
+  (6, 'Ball Animal 2 Bagless Upright Vacuum',
     220.00, 'Dyson', 'China', 60,
     '{"Assembled Product Length": 13.4, "Assembled Product Width": 15.4, "Assembled Product Height": 42.4,
     "Amps": 11.67, "Noise Level (Decibels)": 78.1, "Vacuum Type": "UPRIGHT", "Filter Type": "HEPA",
@@ -46,7 +66,7 @@ values
     But what makes this vacuum really unique is the Ball(TM) technology. Core components are inside the ball, 
     creating a lower centre of gravity allowing you to steer easily into difficult places. 
     On a different level, an instant release wand helps you clean up high and down low, under furniture.'),
-  ('washer', '4.5 cu. ft. 27 Inch Front Load Washer', 126.75, 'LG', 'China', 45,
+  (7, '4.5 cu. ft. 27 Inch Front Load Washer', 126.75, 'LG', 'China', 45,
     '{"Width": 27, "Height": 39, "Depth": 30.25, "Type": "Front",
     "LoadCapacity": "4.5 cu. ft.", "Wash Cycles": 12}',
     'LG 27 Inch Smart Front Load Washer with 4.5 cu. ft. Capacity, 
@@ -71,14 +91,14 @@ values
 commit;
 
 begin;
-insert into "order" (user_id, order_time, order_status, order_delivery_address, order_delivery_date)
+insert into "order" (user_id, order_time, status_id, order_delivery_address, order_delivery_date)
 values
-  (2, '2021-01-03 16:57', 'delivered', '947 Jerome Avenue, Harlingen, TX 78550dddddd', '2021-02-02'),
-  (2, '2021-02-10 16:08', 'processing', '947 Jerome Avenue, Harlingen, TX 78550dddddd', null),
-  (3, '2021-02-10 23:54', 'processing', '3080 Heather Sees Way, Sallisaw, OK 74955', null),
-  (5, '2020-12-29 08:03', 'delivered', '40 Jesmond Rd, KILHAM, YO25 9EG', '2021-01-03'),
-  (6, '2021-01-23 15:30', 'complete', '276 Oak Ridge Drive, Mexico, MO 65265', '2021-03-01'),
-  (9, '2021-02-01 03:13', 'processing', '1 Fairmont Avenue, Kansas City, MO 64106', null);
+  (2, '2021-01-03 16:57', 2, '947 Jerome Avenue, Harlingen, TX 78550dddddd', '2021-02-02'),
+  (2, '2021-02-10 16:08', 3, '947 Jerome Avenue, Harlingen, TX 78550dddddd', null),
+  (3, '2021-02-10 23:54', 3, '3080 Heather Sees Way, Sallisaw, OK 74955', null),
+  (5, '2020-12-29 08:03', 2, '40 Jesmond Rd, KILHAM, YO25 9EG', '2021-01-03'),
+  (6, '2021-01-23 15:30', 1, '276 Oak Ridge Drive, Mexico, MO 65265', '2021-03-01'),
+  (9, '2021-02-01 03:13', 3, '1 Fairmont Avenue, Kansas City, MO 64106', null);
 commit;
 
 begin;

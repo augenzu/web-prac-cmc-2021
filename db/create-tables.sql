@@ -1,31 +1,26 @@
 begin;
 
 
--- extra types
+-- extra tables for types
 
-create type appliance_type as enum ( 
-  'coffee_maker',
-  'cooktop',
-  'fridge',
-  'microwave',
-  'tv',
-  'vacuum_cleaner',
-  'washer'
+create table if not exists app_type (
+  app_type_id serial primary key,
+  app_type_name varchar(30) not null check (app_type_name != '')
 );
 
--- order status
-create type status_type as enum ( 
-  'complete',
-  'delivered',
-  'processing'
+create table if not exists "status" (
+  status_id serial primary key,
+  status_name varchar(20) not null check (status_name != '')
 );
 
 
--- tables
+-- main tables
 
 create table if not exists good (
   good_id serial primary key,
-  good_type appliance_type not null,
+  app_type_id int not null references app_type (app_type_id)
+    on delete restrict
+    on update cascade,
   good_name varchar(100) not null check (good_name != ''),
   good_price numeric not null check (good_price > 0),
   good_company varchar(50) check (good_company != ''),
@@ -49,7 +44,9 @@ create table if not exists "order" (
     on delete cascade
     on update cascade,
   order_time timestamp not null,
-  order_status status_type not null,
+  status_id int not null references "status" (status_id)
+    on delete restrict
+    on update cascade,
   order_delivery_address varchar(50) not null check (order_delivery_address != ''),
   order_delivery_date date
 );
