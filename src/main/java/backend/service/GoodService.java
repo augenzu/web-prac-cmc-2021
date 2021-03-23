@@ -1,9 +1,11 @@
 package backend.service;
 
+import backend.entity.AppType;
 import backend.entity.Good;
 import backend.repository.GoodRepository;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +20,23 @@ public class GoodService {
 	}
 
 	@Transactional
-	public List<Good> findAll(){
-        return goodRepository.findAll();
-    }
+	public Optional<Good> findById(Long id) {
+		return goodRepository.findById(id);
+	}
 
-	@Transactional
-	public List<Good> findAllById(Long id){
-		return goodRepository.findAllById(id);
+	public List<Good> findByAppType(AppType appType) {
+		return goodRepository.findByAppType(appType);
+	}
+
+	public List<Good> findByCompany(String company) {
+		return goodRepository.findByCompany(company);
+	}
+
+	public List<Good> findByDescriptionContaining(String descriptionPart) {
+		return goodRepository.findByDescriptionContaining(descriptionPart);
+	}
+
+	public List<Good> findAllByOrderByName() {
+		return goodRepository.findAllByOrderByName();
 	}
 }
