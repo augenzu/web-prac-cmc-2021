@@ -1,15 +1,17 @@
 package backend.repository;
 
-import backend.entity.AppType;
-
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import backend.entity.AppType;
+import backend.entity.Good;
  
 public interface AppTypeRepository extends JpaRepository<AppType, Long> {
-    Optional<AppType> findById(Long id);
-
     List<AppType> findAllByOrderByName();
 
-    List<AppType> findAll();
+    @Query("select at.goods from AppType at where at.name = :name")
+    List<Good> findGoodsByAppTypeName(@Param("name") String appTypeName);
 }
