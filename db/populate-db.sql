@@ -21,45 +21,33 @@ commit;
 begin;
 insert into good (app_type_id, good_name,
     good_price, good_company, good_assembly_place,
-    good_quantity, good_characteristics, good_description)
+    good_quantity, good_description)
 values
   (1, 'Cuisinart DCC3200W',
   	99.95, 'Cuisinart', 'China', 33,
-    '{"Width": 9.00, "Height": 14.00, "Depth": 7.75}',
     'Cuisinart DCC-3200W 14-Cup PerfecTemp Programmable Coffeemaker, in White'),
   (2, 'Professional Series 36 Inch Gas Sealed Burner Cooktop',
     249.75, 'Dacor', 'Germany', 20,
-    '{"Series": "Professional", "Width": 36, "Cutout Width": 33.625,
-    "Cutout Depth": 19.625, "Cutout Height": 40.450, "Control Type": "Knobs"}',
     'Dacor Professional Series 36 Inch Natural Gas Cooktop with 5 Sealed Burners, 
     Sabbath Mode, SimmerSear Burners, Perma-Flame, SmartFlame, 
     Die-Cast Knobs with Illumina Indicator Lights, 
     PermaClean Bead Blasted Finish in Stainless Steel'),
   (3, 'Contemporary Series 36 Inch Stainless Steel Counter Depth French Door Refrigerator',
     3499.00, 'Fisher Paykel', 'Finnland', 4,
-    '{"Series": "Contemporary", "Width": 35.625, "Height": 70.5, "Depth": 27.0625,
-    "Type": "Freestanding", "Style": "French Door"}',
     'Fisher Paykel Contemporary Series 36 Inch Freestanding Counter 
     Depth 4 Door French Door Refrigerator with 19 cu. ft. Total Capacity, 4 Glass Shelves, 
     3.45 cu. ft. Freezer Capacity, External Water Dispenser, Crisper Drawer, Frost Free Defrost, 
     Ice Maker, ActiveSmart Foodcare, Ice Maker, Variable Temperature Zone in Stainless Steel'),
   (4, '30 Inch Stainless Steel Over the Range 1.7 cu. ft. Capacity Microwave Oven',
     343.85, 'Whirlpool', 'Germany', 13,
-    '{"Width": 29.9375, "Height": 17.125, "Depth": 15.5625, "Style": "Over the Range",
-    "CFM": 300, "Cooking Watts": 1000}',
     'Whirlpool 30 Inch Over the Range Microwave Oven with 1.7 cu. ft. Capacity, 1000 Cooking Watts, 
     Convertible Venting, 300 CFM, Add 30 Seconds in Stainless Steel'),
   (5, 'Samsung UN50TU7000FXZA',
     399.00, 'Samsung', 'China', 57,
-    '{"Type": "LED", "Width": 44, "Height": 25.4, "Depth": 2.4, "HD": "4K", "Smart TV": "Yes"}',
     'Samsung UN50TU7000FXZA 50" TU7000 Crystal UHD 4K Smart TV with Crystal Processor 4K, 
     Boundless Design and HDR in Black'),
   (6, 'Ball Animal 2 Bagless Upright Vacuum',
     220.00, 'Dyson', 'China', 60,
-    '{"Assembled Product Length": 13.4, "Assembled Product Width": 15.4, "Assembled Product Height": 42.4,
-    "Amps": 11.67, "Noise Level (Decibels)": 78.1, "Vacuum Type": "UPRIGHT", "Filter Type": "HEPA",
-    "Corded or Cordless": "CORDED", "Cord Length": 420, "Bagged or Bagless": "BAGLESS",
-    "Bin Capacity": 1.8, "Hose Length": 184.5, "Power (Air Watts)": 270}',
     'Radial Root Cyclone(TM) technology helps remove more dirt, dust and allergens from the home 
     while the self-adjusting cleaner head automatically adjusts to seal in suction, even on hard floors. 
     Dyson''s reconfigured bristles dig deeper into carpets to remove more dirt. 
@@ -67,8 +55,6 @@ values
     creating a lower centre of gravity allowing you to steer easily into difficult places. 
     On a different level, an instant release wand helps you clean up high and down low, under furniture.'),
   (7, '4.5 cu. ft. 27 Inch Front Load Washer', 126.75, 'LG', 'China', 45,
-    '{"Width": 27, "Height": 39, "Depth": 30.25, "Type": "Front",
-    "LoadCapacity": "4.5 cu. ft.", "Wash Cycles": 12}',
     'LG 27 Inch Smart Front Load Washer with 4.5 cu. ft. Capacity, 
     Wi-Fi Enabled, 12 Wash Cycles, 1300 RPM, Steam Cycle, 
     TurboWash, WiFi Connect, ColdWash, TrueBalance, NeveRust Stainless Steel Drum, 

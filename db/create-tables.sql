@@ -5,12 +5,12 @@ begin;
 
 create table if not exists app_type (
   app_type_id serial primary key,
-  app_type_name varchar(30) not null check (app_type_name != '')
+  app_type_name varchar(30) unique not null check (app_type_name != '')
 );
 
 create table if not exists "status" (
   status_id serial primary key,
-  status_name varchar(20) not null check (status_name != '')
+  status_name varchar(20) unique not null check (status_name != '')
 );
 
 
@@ -26,7 +26,6 @@ create table if not exists good (
   good_company varchar(50) check (good_company != ''),
   good_assembly_place varchar(50) check (good_assembly_place != ''),
   good_quantity int not null check (good_quantity >= 0) default 1,
-  good_characteristics jsonb,
   good_description text
 );
 
