@@ -1,9 +1,19 @@
 package backend.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -152,12 +162,12 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		String str =  "User{id=" + id
-				+ ", name=" + name
-				+ ", address=" + address
-				+ ", email=" + email
-				+ ", number=" + number
+				+ ", name='" + name
+				+ "', address='" + address
+				+ "', email=" + email
+				+ ", number='" + number
 				// + ", orders=" + orders.toString()
-				+ "}";
+				+ "'}";
 		return str;
 	}
 }
