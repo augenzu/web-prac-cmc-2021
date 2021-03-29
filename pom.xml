@@ -74,10 +74,9 @@
 
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <junit5.version>5.8.0-M1</junit5.version>
+    <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
 
     <spring-boot.version>2.4.3</spring-boot.version>
-
-    <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
 
   </properties>
 
@@ -220,12 +219,6 @@
               <goal>report</goal>
             </goals>
           </execution>
-          <!-- <execution>
-            <id>check</id>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution> -->
         </executions>
       </plugin>
 
@@ -300,12 +293,6 @@
       <version>${junit5.version}</version>
       <scope>test</scope>
   </dependency>
-
-  <!-- <dependency>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>${jacoco-maven-plugin.version}</version>
-  </dependency> -->
 
   </dependencies>
 
