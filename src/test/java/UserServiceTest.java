@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,19 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 import backend.Appliances;
 import backend.entity.Order;
 import backend.entity.User;
-import backend.repository.UserRepository;
+import backend.service.UserService;
 
 @SpringBootTest(classes = Appliances.class)
-public class UserRepositoryTest {
+public class UserServiceTest {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Test
     @Transactional
     @Rollback
     public void saveUserTest() {
         User arthurDent = new User("Arthur Dent", "Earth", "arthur@dent.com", null);
-        User savedUser = userRepository.save(arthurDent);
+        User savedUser = userService.save(arthurDent);
         assertEquals(arthurDent, savedUser);
     }
 
@@ -40,12 +40,12 @@ public class UserRepositoryTest {
         User fordPrefect = new User("Ford Prefect", "Betelgeuse V", "ford@prefect.com", null);
         User zaphodBeeblebrox = new User("Zaphod Beeblebrox", "Betelgeuse V", "zaphod@beeblebrox.com", null);
 
-        List<User> users = new LinkedList<>();
+        List<User> users = new ArrayList<>();
         users.add(arthurDent);
         users.add(fordPrefect);
         users.add(zaphodBeeblebrox);
 
-        List<User> savedUsers = userRepository.saveAll(users);
+        List<User> savedUsers = userService.saveAll(users);
         assertIterableEquals(users, savedUsers);
     }
 
@@ -54,19 +54,19 @@ public class UserRepositoryTest {
     @Rollback
     public void deleteUserTest() {
         User trillian = new User("Trillian", "Earth", "trisia@macmillan.com", null);
-        User savedUser = userRepository.save(trillian);
-        userRepository.delete(savedUser);
-        assertFalse(userRepository.existsById(savedUser.getId()));
+        User savedUser = userService.save(trillian);
+        userService.delete(savedUser);
+        assertFalse(userService.existsById(savedUser.getId()));
     }
 
     @Test
     public void findByIdTest() {
-        Long unexistingId = -42L;
-        Optional<User> notFoundUser = userRepository.findById(unexistingId);
+        Long nonExistentId = -42L;
+        Optional<User> notFoundUser = userService.findById(nonExistentId);
         assertFalse(notFoundUser.isPresent());
 
         Long existingId = 1L;
-        Optional<User> foundUser = userRepository.findById(existingId);
+        Optional<User> foundUser = userService.findById(existingId);
         assertTrue(foundUser.isPresent());
     }
 
@@ -75,8 +75,8 @@ public class UserRepositoryTest {
     @Rollback
     public void findByNameTest() {
         User arthurDent = new User("Arthur Dent", "Earth", "arthur@dent.com", null);
-        userRepository.save(arthurDent);
-        List<User> foundUsers = userRepository.findByName(arthurDent.getName());
+        userService.save(arthurDent);
+        List<User> foundUsers = userService.findByName(arthurDent.getName());
         assertTrue(foundUsers.contains(arthurDent));
     }
 
@@ -85,8 +85,8 @@ public class UserRepositoryTest {
     @Rollback
     public void findByEmailTest() {
         User arthurDent = new User("Arthur Dent", "Earth", "arthur@dent.com", null);
-        userRepository.save(arthurDent);
-        List<User> foundUsers = userRepository.findByEmail(arthurDent.getEmail());
+        userService.save(arthurDent);
+        List<User> foundUsers = userService.findByEmail(arthurDent.getEmail());
         assertTrue(foundUsers.contains(arthurDent));
     }
 
@@ -101,14 +101,14 @@ public class UserRepositoryTest {
         // arthurDent.addOrder(order1);
         // arthurDent.addOrder(order2);
 
-        // User savedUser = userRepository.save(arthurDent);
+        // User savedUser = userService.save(arthurDent);
 
-        // List<Order> foundOrders = userRepository.findUserOrdersById(savedUser.getId());
+        // List<Order> foundOrders = userService.findUserOrdersById(savedUser.getId());
         // assertTrue(foundOrders.contains(order1)
         //         && foundOrders.contains(order2)
         //         && foundOrders.size() == 2);
 
-        List<Order> foundOrders = userRepository.findUserOrdersById(2L);
+        List<Order> foundOrders = userService.findUserOrdersById(2L);
         assertEquals(foundOrders.size(), 2);
     }
 }
