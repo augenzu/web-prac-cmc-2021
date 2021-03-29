@@ -42,6 +42,23 @@ public class UserServiceTest {
     }
 
     @Test
+    @Transactional
+    @Rollback
+    public void updateTest() {
+        User trillian = new User("Trillian", "Earth", "tricia@mcmillan.com", null);
+        User savedUser = userService.save(trillian);
+        savedUser.setName("Tricia McMillan");
+        Optional<User> updatedUser = userService.update(savedUser);
+        assertTrue(updatedUser.isPresent());
+        trillian.setName("Tricia Mcillan");
+        assertEquals(trillian.getName(), updatedUser.get().getName());
+
+        userService.delete(trillian);
+        Optional<User> notFoundUser = userService.update(trillian);
+        assertFalse(notFoundUser.isPresent());;
+    }
+
+    @Test
     public void findByIdTest() {
         Long existingId = 1L;
         Optional<User> foundUser = userService.findById(existingId);
@@ -59,7 +76,11 @@ public class UserServiceTest {
         User zaphodBeeblebrox = new User("Zaphod Beeblebrox", "Betelgeuse V", "zaphod@beeblebrox.com", null);
         userService.save(zaphodBeeblebrox);
         List<User> foundUsers = userService.findByNameContaining("zaphod");
+        assertEquals(1, foundUsers.size());
         assertTrue(foundUsers.contains(zaphodBeeblebrox));
+
+        List<User> notFoundUsers = userService.findByNameContaining("no_such_name");
+        assertTrue(notFoundUsers.isEmpty());
     }
 
     @Test
@@ -69,7 +90,11 @@ public class UserServiceTest {
         User arthurDent = new User("Arthur Dent", "Earth", "arthur@dent.com", null);
         userService.save(arthurDent);
         List<User> foundUsers = userService.findByEmail(arthurDent.getEmail());
+        assertEquals(1, foundUsers.size());
         assertTrue(foundUsers.contains(arthurDent));
+
+        List<User> notFoundUsers = userService.findByEmail("no_such_email");
+        assertTrue(notFoundUsers.isEmpty());
     }
 
     @Test

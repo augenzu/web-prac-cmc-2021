@@ -26,8 +26,15 @@ public class UserService {
 		userRepository.delete(user);
 	}
 
-	public void deleteById(Long id) {
-		userRepository.deleteById(id);
+	public Optional<User> update(User newUser) {
+		Optional<User> oldUser = findById(newUser.getId());
+
+		if (oldUser.isPresent()) {
+			User savedUser = save(newUser);
+			return Optional.of(savedUser);
+		} else {
+			return oldUser;
+		}
 	}
 
 	public boolean existsById(Long id) {
