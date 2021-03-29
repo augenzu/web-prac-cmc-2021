@@ -1,11 +1,24 @@
 package backend.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -19,9 +32,9 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "order_time", nullable = false)
-	// @Temporal(TemporalType.TIMESTAMP)
-	private Timestamp time;
+	@Column(name = "order_ordered_at", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date orderedAt;
 
 	@ManyToOne()
 	@JoinColumn(name = "status_id")
@@ -30,9 +43,9 @@ public class Order implements Serializable {
 	@Column(name = "order_delivery_address", nullable = false, length = 50)
 	private String deliveryAddress;
 
-	@Column(name = "order_delivery_date")
-	// @Temporal(TemporalType.DATE)
-	private Date deliveryDate;
+	@Column(name = "order_deliver_on")
+	@Temporal(TemporalType.DATE)
+	private Date deliverOn;
 
 	@ManyToOne()
 	@JoinColumn(name = "user_id")
@@ -44,15 +57,15 @@ public class Order implements Serializable {
 			joinColumns = @JoinColumn(name = "order_id"),
 			inverseJoinColumns = @JoinColumn(name = "good_id")
 	)
-	private Set<Good> goods = new HashSet<Good>();
+	private List<Good> goods = new ArrayList<>();
 
 	public Order() {}
 
-	public Order(Timestamp time, Status status, String deliveryAddress, Date deliveryDate) {
-		this.time = time;
+	public Order(Date orderedAt, Status status, String deliveryAddress, Date deliverOn) {
+		this.orderedAt = orderedAt;
 		this.status = status;
 		this.deliveryAddress = deliveryAddress;
-		this.deliveryDate = deliveryDate;
+		this.deliverOn = deliverOn;
 	}
 
 	public void addGood(Good good) {
@@ -67,12 +80,12 @@ public class Order implements Serializable {
 		return id;
 	}
 
-	public Timestamp getTime() {
-		return time;
+	public Date getOrderedAt() {
+		return orderedAt;
 	}
 
-	public void setTime(Timestamp time) {
-		this.time = time;
+	public void setOrderedAt(Date orderedAt) {
+		this.orderedAt = orderedAt;
 	}
 
 	public Status getStatus() {
@@ -91,12 +104,12 @@ public class Order implements Serializable {
 		this.deliveryAddress = deliveryAddress;
 	}
 
-	public Date getDeliveryDate() {
-		return deliveryDate;
+	public Date getDeliverOn() {
+		return deliverOn;
 	}
 
-	public void setDeliveryDate(Date deliveryDate) {
-		this.deliveryDate = deliveryDate;
+	public void setDeliverOn(Date deliverOn) {
+		this.deliverOn = deliverOn;
 	}
 
 	public User getUser() {
@@ -107,11 +120,11 @@ public class Order implements Serializable {
 		this.user = user;
 	}
 
-	public Set<Good> getGoods() {
+	public List<Good> getGoods() {
 		return goods;
 	}
 
-	public void setGoods(Set<Good> goods) {
+	public void setGoods(List<Good> goods) {
 			this.goods = goods;
 	}
 
@@ -121,10 +134,10 @@ public class Order implements Serializable {
 
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((time == null) ? 0 : time.hashCode());
+		result = prime * result + ((orderedAt == null) ? 0 : orderedAt.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((deliveryAddress == null) ? 0 : deliveryAddress.hashCode());
-		result = prime * result + ((deliveryDate == null) ? 0 : deliveryDate.hashCode());
+		result = prime * result + ((deliverOn == null) ? 0 : deliverOn.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		result = prime * result + ((goods == null) ? 0 : goods.hashCode());
 		
@@ -146,8 +159,8 @@ public class Order implements Serializable {
 				|| !id.equals(other.id)) {
 			return false;
 		}
-		if ((time == null && other.time != null)
-				|| !time.equals(other.time)) {
+		if ((orderedAt == null && other.orderedAt != null)
+				|| !orderedAt.equals(other.orderedAt)) {
 			return false;
 		}
 		if ((status == null && other.status != null)
@@ -158,8 +171,8 @@ public class Order implements Serializable {
 				|| !deliveryAddress.equals(other.deliveryAddress)) {
 			return false;
 		}
-		if ((deliveryDate == null && other.deliveryDate != null)
-				|| !deliveryDate.equals(other.deliveryDate)) {
+		if ((deliverOn == null && other.deliverOn != null)
+				|| !deliverOn.equals(other.deliverOn)) {
 			return false;
 		}
 		if ((user == null && other.user != null)
@@ -175,11 +188,11 @@ public class Order implements Serializable {
 
 	@Override
 	public String toString() {
-		String str =  "User{id=" + id
-				+ ", time=" + time
-				+ ", status=" + status
-				+ ", deliveryAddress=" + deliveryAddress
-				+ ", deliveryDate=" + deliveryDate
+		String str =  "Order{id=" + id
+				+ ", orderedAt='" + orderedAt
+				+ "', status=" + status
+				+ ", deliveryAddress='" + deliveryAddress
+				+ "', deliverOn=" + deliverOn
 				+ ", user=" + user.toString()
 				// + ", goods=" + goods.toString()
 				+ "}";
