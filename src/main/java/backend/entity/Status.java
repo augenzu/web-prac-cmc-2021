@@ -42,7 +42,6 @@ public class Status implements Serializable {
     }
 
 	public void addOrder(Order order) {
-		order.setStatus(this);
 		orders.add(order);
 	}
 
@@ -64,10 +63,6 @@ public class Status implements Serializable {
 
     public List<Order> getOrders() {
 		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
 	}
 
     @Override
@@ -93,13 +88,10 @@ public class Status implements Serializable {
 		Status other = (Status) obj;
 
 		if ((id == null && other.id != null)
-				|| !id.equals(other.id)) {
+				|| (id != null && !id.equals(other.id))) {
 			return false;
 		}
-		if ((name == null && other.name != null)
-				|| !name.equals(other.name)) {
-			return false;
-		}
+
 		return true;
 	}
 

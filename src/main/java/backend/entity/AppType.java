@@ -42,7 +42,6 @@ public class AppType implements Serializable {
     }
 
 	public void addGood(Good good) {
-		good.setAppType(this);
 		goods.add(good);
 	}
 
@@ -64,10 +63,6 @@ public class AppType implements Serializable {
 
     public List<Good> getGoods() {
 		return goods;
-	}
-
-	public void setGoods(List<Good> goods) {
-		this.goods = goods;
 	}
 
     @Override
@@ -93,13 +88,10 @@ public class AppType implements Serializable {
 		AppType other = (AppType) obj;
 
 		if ((id == null && other.id != null)
-				|| !id.equals(other.id)) {
+				|| (id != null && !id.equals(other.id))) {
 			return false;
 		}
-		if ((name == null && other.name != null)
-				|| !name.equals(other.name)) {
-			return false;
-		}
+		
 		return true;
 	}
 

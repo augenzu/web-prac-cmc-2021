@@ -54,12 +54,7 @@ public class User implements Serializable {
 	}
 
 	public void addOrder(Order order) {
-		order.setUser(this);
 		orders.add(order);
-	}
-
-	public void removeOrder(Order order) {
-		orders.remove(order);
 	}
 
 	public Long getId() {
@@ -102,10 +97,6 @@ public class User implements Serializable {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-
 	@Override
  	public int hashCode() {
 		final int prime = 31;
@@ -133,29 +124,10 @@ public class User implements Serializable {
 		User other = (User) obj;
 
 		if ((id == null && other.id != null)
-				|| !id.equals(other.id)) {
+				|| (id != null && !id.equals(other.id))) {
 			return false;
 		}
-		if ((name == null && other.name != null)
-				|| !name.equals(other.name)) {
-			return false;
-		}
-		if ((address == null && other.address != null)
-				|| !address.equals(other.address)) {
-			return false;
-		}
-		if ((email == null && other.email != null)
-				|| !email.equals(other.email)) {
-			return false;
-		}
-		if ((number == null && other.number != null)
-				|| !number.equals(other.number)) {
-			return false;
-		}
-		if ((orders == null && other.orders != null)
-				|| !orders.equals(other.orders)) {
-			return false;
-		}
+
 		return true;
 	}
 
@@ -166,7 +138,6 @@ public class User implements Serializable {
 				+ "', address='" + address
 				+ "', email=" + email
 				+ ", number='" + number
-				// + ", orders=" + orders.toString()
 				+ "'}";
 		return str;
 	}

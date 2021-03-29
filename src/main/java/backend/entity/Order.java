@@ -1,8 +1,9 @@
 package backend.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,8 +17,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -33,19 +32,17 @@ public class Order implements Serializable {
 	private Long id;
 
 	@Column(name = "order_ordered_at", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date orderedAt;
+	private LocalDateTime orderedAt;
 
 	@ManyToOne()
 	@JoinColumn(name = "status_id")
-	private Status status;
+	private Status status = new Status("processing");
 
 	@Column(name = "order_delivery_address", nullable = false, length = 50)
 	private String deliveryAddress;
 
 	@Column(name = "order_deliver_on")
-	@Temporal(TemporalType.DATE)
-	private Date deliverOn;
+	private LocalDate deliverOn;
 
 	@ManyToOne()
 	@JoinColumn(name = "user_id")
@@ -61,30 +58,37 @@ public class Order implements Serializable {
 
 	public Order() {}
 
-	public Order(Date orderedAt, Status status, String deliveryAddress, Date deliverOn) {
+	public Order(LocalDateTime orderedAt, Status status,
+			String deliveryAddress, LocalDate deliverOn,
+			User user) {
 		this.orderedAt = orderedAt;
 		this.status = status;
 		this.deliveryAddress = deliveryAddress;
 		this.deliverOn = deliverOn;
+		this.user = user;
+		status.addOrder(this);
+		user.addOrder(this);
 	}
 
 	public void addGood(Good good) {
 		goods.add(good);
+		good.addOrder(this);
 	}
 
 	public void removeGood(Good good) {
 		goods.remove(good);
+		good.removeOrder(this);
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public Date getOrderedAt() {
+	public LocalDateTime getOrderedAt() {
 		return orderedAt;
 	}
 
-	public void setOrderedAt(Date orderedAt) {
+	public void setOrderedAt(LocalDateTime orderedAt) {
 		this.orderedAt = orderedAt;
 	}
 
@@ -93,7 +97,9 @@ public class Order implements Serializable {
 	}
 
 	public void setStatus(Status status) {
+		this.status.removeOrder(this);
 		this.status = status;
+		status.addOrder(this);
 	}
 
 	public String getDeliveryAddress() {
@@ -104,11 +110,11 @@ public class Order implements Serializable {
 		this.deliveryAddress = deliveryAddress;
 	}
 
-	public Date getDeliverOn() {
+	public LocalDate getDeliverOn() {
 		return deliverOn;
 	}
 
-	public void setDeliverOn(Date deliverOn) {
+	public void setDeliverOn(LocalDate deliverOn) {
 		this.deliverOn = deliverOn;
 	}
 
@@ -116,16 +122,8 @@ public class Order implements Serializable {
 		return user;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public List<Good> getGoods() {
 		return goods;
-	}
-
-	public void setGoods(List<Good> goods) {
-			this.goods = goods;
 	}
 
 	@Override
@@ -156,33 +154,10 @@ public class Order implements Serializable {
 		Order other = (Order) obj;
 
 		if ((id == null && other.id != null)
-				|| !id.equals(other.id)) {
+				|| (id != null && !id.equals(other.id))) {
 			return false;
 		}
-		if ((orderedAt == null && other.orderedAt != null)
-				|| !orderedAt.equals(other.orderedAt)) {
-			return false;
-		}
-		if ((status == null && other.status != null)
-				|| !status.equals(other.status)) {
-			return false;
-		}
-		if ((deliveryAddress == null && other.deliveryAddress != null)
-				|| !deliveryAddress.equals(other.deliveryAddress)) {
-			return false;
-		}
-		if ((deliverOn == null && other.deliverOn != null)
-				|| !deliverOn.equals(other.deliverOn)) {
-			return false;
-		}
-		if ((user == null && other.user != null)
-				|| !user.equals(other.user)) {
-			return false;
-		}
-		if ((goods == null && other.goods != null)
-				|| !goods.equals(other.goods)) {
-			return false;
-		}
+
 		return true;
 	}
 
@@ -194,7 +169,6 @@ public class Order implements Serializable {
 				+ ", deliveryAddress='" + deliveryAddress
 				+ "', deliverOn=" + deliverOn
 				+ ", user=" + user.toString()
-				// + ", goods=" + goods.toString()
 				+ "}";
 		return str;
 	}
