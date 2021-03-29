@@ -42,12 +42,12 @@ create table if not exists "order" (
   user_id int not null references "user" (user_id)
     on delete cascade
     on update cascade,
-  order_time timestamp not null,
+  order_ordered_at timestamp not null,
   status_id int not null references "status" (status_id)
     on delete restrict
     on update cascade,
   order_delivery_address varchar(50) not null check (order_delivery_address != ''),
-  order_delivery_date date
+  order_deliver_on date
 );
 
 create table if not exists order_good (

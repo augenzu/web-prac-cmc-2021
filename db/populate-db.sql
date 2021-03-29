@@ -77,7 +77,7 @@ values
 commit;
 
 begin;
-insert into "order" (user_id, order_time, status_id, order_delivery_address, order_delivery_date)
+insert into "order" (user_id, order_ordered_at, status_id, order_delivery_address, order_deliver_on)
 values
   (2, '2021-01-03 16:57', 2, '947 Jerome Avenue, Harlingen, TX 78550dddddd', '2021-02-02'),
   (2, '2021-02-10 16:08', 3, '947 Jerome Avenue, Harlingen, TX 78550dddddd', null),
