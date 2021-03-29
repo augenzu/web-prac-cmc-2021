@@ -3,7 +3,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,23 +34,6 @@ public class UserServiceTest {
     @Test
     @Transactional
     @Rollback
-    public void saveMultipleUsersTest() {
-        User arthurDent = new User("Arthur Dent", "Earth", "arthur@dent.com", null);
-        User fordPrefect = new User("Ford Prefect", "Betelgeuse V", "ford@prefect.com", null);
-        User zaphodBeeblebrox = new User("Zaphod Beeblebrox", "Betelgeuse V", "zaphod@beeblebrox.com", null);
-
-        List<User> users = new ArrayList<>();
-        users.add(arthurDent);
-        users.add(fordPrefect);
-        users.add(zaphodBeeblebrox);
-
-        List<User> savedUsers = userService.saveAll(users);
-        assertIterableEquals(users, savedUsers);
-    }
-
-    @Test
-    @Transactional
-    @Rollback
     public void deleteUserTest() {
         User trillian = new User("Trillian", "Earth", "tricia@mcmillan.com", null);
         User savedUser = userService.save(trillian);
@@ -73,11 +55,11 @@ public class UserServiceTest {
     @Test
     @Transactional
     @Rollback
-    public void findByNameTest() {
-        User arthurDent = new User("Arthur Dent", "Earth", "arthur@dent.com", null);
-        userService.save(arthurDent);
-        List<User> foundUsers = userService.findByName(arthurDent.getName());
-        assertTrue(foundUsers.contains(arthurDent));
+    public void findByNameContainingTest() {
+        User zaphodBeeblebrox = new User("Zaphod Beeblebrox", "Betelgeuse V", "zaphod@beeblebrox.com", null);
+        userService.save(zaphodBeeblebrox);
+        List<User> foundUsers = userService.findByNameContaining("zaphod");
+        assertTrue(foundUsers.contains(zaphodBeeblebrox));
     }
 
     @Test

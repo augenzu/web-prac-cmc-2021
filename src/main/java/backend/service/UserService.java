@@ -18,6 +18,10 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+
 	public void delete(User user) {
 		userRepository.delete(user);
 	}
@@ -38,23 +42,15 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
-	public List<User> findByName(String name) {
-		return userRepository.findByName(name);
+	public List<User> findByNameContaining(String name) {
+		return userRepository.findByNameContainingIgnoreCase(name);
 	}
 
 	public List<User> findByEmail(String email) {
-		return userRepository.findByEmail(email);
+		return userRepository.findByEmailIgnoreCase(email);
 	}
 
 	public List<Order> findUserOrdersById(Long id) {
 		return userRepository.findUserOrdersById(id);
-	}
-
-	public User save(User user) {
-		return userRepository.save(user);
-	}
-
-	public List<User> saveAll(List<User> users) {
-		return userRepository.saveAll(users);
 	}
 }
