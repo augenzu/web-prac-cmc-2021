@@ -1,13 +1,14 @@
 package backend.service;
 
-import backend.entity.AppType;
-import backend.repository.AppTypeRepository;
-
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import backend.entity.AppType;
+import backend.entity.Good;
+import backend.repository.AppTypeRepository;
 
 @Service
 public class AppTypeService {
@@ -18,16 +19,15 @@ public class AppTypeService {
         this.appTypeRepository = appTypeRepository;
     }
 
-    @Transactional
-    public Optional<AppType> findById(Long id) {
-        return appTypeRepository.findById(id);
+    public Optional<AppType> findByName(String name) {
+        return appTypeRepository.findByName(name);
     }
 
     public List<AppType> findAllByOrderByName() {
         return appTypeRepository.findAllByOrderByName();
     }
 
-    public List<AppType> findAll() {
-        return appTypeRepository.findAll();
+    public List<Good> findGoodsByAppTypeName(String appTypeName) {
+        return appTypeRepository.findGoodsByAppTypeName(appTypeName);
     }
 }
