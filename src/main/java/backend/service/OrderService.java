@@ -1,14 +1,14 @@
 package backend.service;
 
-import backend.entity.Order;
-import backend.repository.OrderRepository;
-import backend.entity.Status;
-
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import backend.entity.Good;
+import backend.entity.Order;
+import backend.repository.OrderRepository;
 
 @Service
 public class OrderService {
@@ -19,16 +19,15 @@ public class OrderService {
 		this.orderRepository = orderRepository;
 	}
 
-	@Transactional
 	public Optional<Order> findById(Long id) {
 		return orderRepository.findById(id);
 	}
 
-	public List<Order> findByStatus(Status status) {
-		return orderRepository.findByStatus(status);
+	public List<Order> findAllByOrderByOrderedAt() {
+		return orderRepository.findAllByOrderByOrderedAt();
 	}
 
-	public List<Order> findAllByOrderByTime() {
-		return orderRepository.findAllByOrderByTime();
+	public List<Good> findOrderGoodsById(Long id) {
+		return orderRepository.findOrderGoodsById(id);
 	}
 }
