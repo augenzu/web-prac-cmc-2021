@@ -92,23 +92,11 @@ public class UserServiceTest {
 
     @Test
     @Transactional
-    @Rollback
     public void findUserOrdersByIdTest() {
-        // User arthurDent = new User("Arthur Dent", "Earth", "arthur@dent.com", null);
-
-        // Order order1 = new Order();
-        // Order order2 = new Order();
-        // arthurDent.addOrder(order1);
-        // arthurDent.addOrder(order2);
-
-        // User savedUser = userService.save(arthurDent);
-
-        // List<Order> foundOrders = userService.findUserOrdersById(savedUser.getId());
-        // assertTrue(foundOrders.contains(order1)
-        //         && foundOrders.contains(order2)
-        //         && foundOrders.size() == 2);
-
-        List<Order> foundOrders = userService.findUserOrdersById(2L);
-        assertEquals(foundOrders.size(), 2);
+        Long idOfUserWhoHasOrders = 2L;
+        User userWhoHasOrders = userService.findById(idOfUserWhoHasOrders).get();
+        List<Order> orders = userWhoHasOrders.getOrders();
+        List<Order> foundOrders = userService.findUserOrdersById(idOfUserWhoHasOrders);
+        assertIterableEquals(orders, foundOrders);
     }
 }
