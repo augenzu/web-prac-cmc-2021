@@ -25,47 +25,20 @@ public class UserServiceTest {
     @Test
     @Transactional
     @Rollback
-    public void saveUserTest() {
-        User arthurDent = new User("Arthur Dent", "Earth", "arthur@dent.com", null);
-        User savedUser = userService.save(arthurDent);
-        assertEquals(arthurDent, savedUser);
-    }
-
-    @Test
-    @Transactional
-    @Rollback
-    public void deleteUserTest() {
-        User trillian = new User("Trillian", "Earth", "tricia@mcmillan.com", null);
-        User savedUser = userService.save(trillian);
-        userService.delete(savedUser);
-        assertFalse(userService.existsById(savedUser.getId()));
-    }
-
-    @Test
-    @Transactional
-    @Rollback
     public void updateTest() {
-        User trillian = new User("Trillian", "Earth", "tricia@mcmillan.com", null);
+        String oldName = "Trillian";
+        String newName = "Tricia Mcillan";
+
+        User trillian = new User(oldName, "Earth", "tricia@mcmillan.com", null);
         User savedUser = userService.save(trillian);
-        savedUser.setName("Tricia McMillan");
+        savedUser.setName(newName);
         Optional<User> updatedUser = userService.update(savedUser);
         assertTrue(updatedUser.isPresent());
-        trillian.setName("Tricia Mcillan");
+        trillian.setName(newName);
         assertEquals(trillian.getName(), updatedUser.get().getName());
 
         userService.delete(trillian);
         Optional<User> notFoundUser = userService.update(trillian);
-        assertFalse(notFoundUser.isPresent());;
-    }
-
-    @Test
-    public void findByIdTest() {
-        Long existingId = 1L;
-        Optional<User> foundUser = userService.findById(existingId);
-        assertTrue(foundUser.isPresent());
-
-        Long nonExistentId = -42L;
-        Optional<User> notFoundUser = userService.findById(nonExistentId);
         assertFalse(notFoundUser.isPresent());
     }
 
