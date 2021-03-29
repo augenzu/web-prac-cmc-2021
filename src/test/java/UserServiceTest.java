@@ -53,7 +53,7 @@ public class UserServiceTest {
     @Transactional
     @Rollback
     public void deleteUserTest() {
-        User trillian = new User("Trillian", "Earth", "trisia@macmillan.com", null);
+        User trillian = new User("Trillian", "Earth", "tricia@mcmillan.com", null);
         User savedUser = userService.save(trillian);
         userService.delete(savedUser);
         assertFalse(userService.existsById(savedUser.getId()));
@@ -61,13 +61,13 @@ public class UserServiceTest {
 
     @Test
     public void findByIdTest() {
-        Long nonExistentId = -42L;
-        Optional<User> notFoundUser = userService.findById(nonExistentId);
-        assertFalse(notFoundUser.isPresent());
-
         Long existingId = 1L;
         Optional<User> foundUser = userService.findById(existingId);
         assertTrue(foundUser.isPresent());
+
+        Long nonExistentId = -42L;
+        Optional<User> notFoundUser = userService.findById(nonExistentId);
+        assertFalse(notFoundUser.isPresent());
     }
 
     @Test
