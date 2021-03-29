@@ -1,8 +1,8 @@
 package backend.entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,7 +33,7 @@ public class Status implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "status_id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<Order> orders = new HashSet<Order>();
+    private List<Order> orders = new ArrayList<>();
 
     public Status() {}
 
@@ -62,11 +62,11 @@ public class Status implements Serializable {
 		this.name = name;
 	}
 
-    public Set<Order> getOrders() {
+    public List<Order> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(Set<Order> orders) {
+	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
 
