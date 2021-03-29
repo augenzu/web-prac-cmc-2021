@@ -1,20 +1,22 @@
 package backend.repository;
 
-import backend.entity.AppType;
-import backend.entity.Good;
-
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import backend.entity.Good;
  
 public interface GoodRepository extends JpaRepository<Good, Long> {
-    Optional<Good> findById(Long id);
+    List<Good> findByNameContainingIgnoreCase(String part);
 
-    List<Good> findByAppType(AppType appType);
-    
-    List<Good> findByCompany(String company);
+    List<Good> findByCompanyContainingIgnoreCase(String part);
 
-    List<Good> findByDescriptionContaining(String descriptionPart);
+    List<Good> findByAssemblyPlaceContainingIgnoreCase(String part);
 
-    List<Good> findAllByOrderByName();
+    List<Good> findByDescriptionContainingIgnoreCase(String part);
+
+    List<Good> findByPriceBetween(Double low, double high);
+
+    // @Query("select g from Good g where g.quantity > 0")
+    // List<Good> findAllAvailable();
 }

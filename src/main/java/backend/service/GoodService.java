@@ -1,42 +1,47 @@
 package backend.service;
 
-import backend.entity.AppType;
-import backend.entity.Good;
-import backend.repository.GoodRepository;
-
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import backend.entity.Good;
+import backend.repository.GoodRepository;
 
 @Service
 public class GoodService {
 	@Autowired
   	private final GoodRepository goodRepository;
 
+	public Good save(Good good) {
+		return goodRepository.save(good);
+	}
+
 	public GoodService(GoodRepository goodRepository){
 		this.goodRepository = goodRepository;
 	}
 
-	@Transactional
-	public Optional<Good> findById(Long id) {
-		return goodRepository.findById(id);
+	public List<Good> findAll() {
+		return goodRepository.findAll();
 	}
 
-	public List<Good> findByAppType(AppType appType) {
-		return goodRepository.findByAppType(appType);
+	public List<Good> findByNameContaining(String part) {
+		return goodRepository.findByNameContainingIgnoreCase(part);
 	}
 
-	public List<Good> findByCompany(String company) {
-		return goodRepository.findByCompany(company);
+	public List<Good> findByCompanyContaining(String part) {
+		return goodRepository.findByCompanyContainingIgnoreCase(part);
 	}
 
-	public List<Good> findByDescriptionContaining(String descriptionPart) {
-		return goodRepository.findByDescriptionContaining(descriptionPart);
+	public List<Good> findByAssemblyPlaceContaining(String part) {
+		return goodRepository.findByAssemblyPlaceContainingIgnoreCase(part);
 	}
 
-	public List<Good> findAllByOrderByName() {
-		return goodRepository.findAllByOrderByName();
+	public List<Good> findByDescriptionContaining(String part) {
+		return goodRepository.findByDescriptionContainingIgnoreCase(part);
+	}
+
+	public List<Good> findByPriceBetween(Double low, double high) {
+		return goodRepository.findByPriceBetween(low, high);
 	}
 }

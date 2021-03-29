@@ -2,23 +2,34 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import backend.Appliances;
 import backend.entity.Good;
 import backend.entity.Order;
+import backend.entity.Status;
+import backend.entity.User;
 import backend.service.OrderService;
+import backend.service.StatusService;
+import backend.service.UserService;
 
 @SpringBootTest(classes = Appliances.class)
 public class OrderServiceTest {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    StatusService StatusService;
 
     @Test
     public void findByIdTest() {
@@ -31,16 +42,39 @@ public class OrderServiceTest {
         assertFalse(notFoundOrder.isPresent());
     }
 
-    // @Test
-    // public void findAllByOrderByOrderedAtTest() {
-    //     orderService.findAllByOrderByOrderedAt().forEach(it -> {
-    //         System.out.println();
-    //         System.out.println();
-    //         System.out.println(it);
-    //         System.out.println();
-    //         System.out.println();
-    //     });
-    // }
+    @Test
+    @Transactional
+    @Rollback
+    public void findByOrderedAtBetweenOrderByOrderedAtDescTest() {
+        User user = new User("userName", "userAddress", "userEmail", null);
+        User savedUser = userService.save(user);
+        Status processingStatus = StatusService.findByName("processing").get();
+        LocalDateTime veryDistantDateTime = LocalDateTime.now().plusYears(1000);
+
+        List<Order> orders = new ArrayList<>();
+        orders.add(new Order(veryDistantDateTime.plusYears(1),
+                processingStatus, "someDeliveryAddress", null, savedUser));
+        orders.add(new Order(veryDistantDateTime,
+                processingStatus, "someDeliveryAddress", null, savedUser));
+        List<Order> savedOrders = orderService.saveAll(orders);
+
+        LocalDateTime beg = veryDistantDateTime.minusYears(10);
+        LocalDateTime end = veryDistantDateTime.plusYears(10);
+        List<Order> foundOrders = orderService.findByOrderedAtBetweenOrderByOrderedAtDesc(beg, end);
+
+        assertIterableEquals(savedOrders, foundOrders);
+    }
+
+    @Test
+    public void findAllByOrderByOrderedAtDescTest() {
+        LocalDateTime beg = LocalDateTime.now().minusYears(1000);
+        LocalDateTime end = LocalDateTime.now().plusYears(1000);
+        List<Order> orders = orderService.findByOrderedAtBetweenOrderByOrderedAtDesc(beg, end);
+
+        List<Order> foundOrders = orderService.findAllByOrderByOrderedAtDesc();
+
+        assertIterableEquals(orders, foundOrders);
+    }
 
     @Test
     @Transactional
