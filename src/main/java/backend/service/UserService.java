@@ -7,6 +7,7 @@ import backend.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +27,7 @@ public class UserService {
 		userRepository.delete(user);
 	}
 
+	@Modifying
 	public Optional<User> update(User newUser) {
 		Optional<User> oldUser = findById(newUser.getId());
 

@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,6 +10,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import backend.Appliances;
@@ -20,6 +22,26 @@ import backend.service.AppTypeService;
 public class AppTypeServiceTest {
     @Autowired
     private AppTypeService appTypeService;
+
+    @Test
+    @Transactional
+    @Rollback
+    public void updateTest() {
+        String oldName = "space_ship_snake_case";
+        String newName = "SpaceShipCamelCase";
+
+        AppType spaceShip = new AppType(oldName);
+        AppType savedAppType = appTypeService.save(spaceShip);
+        savedAppType.setName(newName);
+        Optional<AppType> updatedAppType = appTypeService.update(savedAppType);
+        assertTrue(updatedAppType.isPresent());
+        spaceShip.setName(newName);
+        assertEquals(spaceShip.getName(), updatedAppType.get().getName());
+
+        appTypeService.delete(spaceShip);
+        Optional<AppType> notFoundAppType = appTypeService.update(spaceShip);
+        assertFalse(notFoundAppType.isPresent());;
+    }
 
     @Test
     public void findByNameTest() {

@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,10 +27,35 @@ import backend.service.UserService;
 public class OrderServiceTest {
     @Autowired
     private OrderService orderService;
+
     @Autowired
     UserService userService;
+
     @Autowired
-    StatusService StatusService;
+    StatusService statusService;
+
+    @Test
+    @Transactional
+    @Rollback
+    public void updateTest() {
+        Status oldStatus = statusService.findByName("processing").get();
+        Status newStatus = statusService.findByName("complete").get();
+        LocalDateTime orderedAt = LocalDateTime.now();
+        User user = new User("userName", "userAddress", "userEmail", null);
+        User savedUser = userService.save(user);
+
+        Order order = new Order(orderedAt, oldStatus, "someDeliveryAddress", null, savedUser);
+        Order savedOrder = orderService.save(order);
+        savedOrder.setStatus(newStatus);
+        Optional<Order> updatedOrder = orderService.update(savedOrder);
+        assertTrue(updatedOrder.isPresent());
+        order.setStatus(newStatus);
+        assertEquals(order.getStatus(), updatedOrder.get().getStatus());
+
+        orderService.delete(order);
+        Optional<Order> notFoundOrder = orderService.update(order);
+        assertFalse(notFoundOrder.isPresent());;
+    }
 
     @Test
     public void findByIdTest() {
@@ -48,7 +74,7 @@ public class OrderServiceTest {
     public void findByOrderedAtBetweenOrderByOrderedAtDescTest() {
         User user = new User("userName", "userAddress", "userEmail", null);
         User savedUser = userService.save(user);
-        Status processingStatus = StatusService.findByName("processing").get();
+        Status processingStatus = statusService.findByName("processing").get();
         LocalDateTime veryDistantDateTime = LocalDateTime.now().plusYears(1000);
 
         List<Order> orders = new ArrayList<>();

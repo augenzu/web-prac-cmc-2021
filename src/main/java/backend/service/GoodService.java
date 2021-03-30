@@ -1,8 +1,10 @@
 package backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import backend.entity.Good;
@@ -13,12 +15,36 @@ public class GoodService {
 	@Autowired
   	private final GoodRepository goodRepository;
 
+	public GoodService(GoodRepository goodRepository){
+		this.goodRepository = goodRepository;
+	}
+
 	public Good save(Good good) {
 		return goodRepository.save(good);
 	}
 
-	public GoodService(GoodRepository goodRepository){
-		this.goodRepository = goodRepository;
+	public List<Good> saveAll(List<Good> goods) {
+		return goodRepository.saveAll(goods);
+	}
+
+	public void delete(Good good) {
+        goodRepository.delete(good);
+    }
+
+    @Modifying
+	public Optional<Good> update(Good newGood) {
+        Optional<Good> oldGood = findById(newGood.getId());
+
+        if (oldGood.isPresent()) {
+            Good savedGood = save(newGood);
+            return Optional.of(savedGood);
+        } else {
+            return oldGood;
+        }
+    }
+
+	public Optional<Good> findById(Long id) {
+		return goodRepository.findById(id);
 	}
 
 	public List<Good> findAll() {

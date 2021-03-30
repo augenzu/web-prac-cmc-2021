@@ -1,7 +1,9 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,27 @@ public class GoodServiceTest {
 
     @Autowired
     private AppTypeService appTypeService;
+
+    @Test
+    @Transactional
+    @Rollback
+    public void updateTest() {
+        AppType oldAppType = appTypeService.findByName("microwave").get();
+        AppType newAppType = appTypeService.findByName("tv").get();
+
+        Good good = new Good(oldAppType, "some name",
+                42.42, null, null, 42, null);
+        Good savedGood = goodService.save(good);
+        savedGood.setAppType(newAppType);
+        Optional<Good> updatedGood = goodService.update(savedGood);
+        assertTrue(updatedGood.isPresent());
+        good.setAppType(newAppType);
+        assertEquals(good.getAppType(), updatedGood.get().getAppType());
+
+        goodService.delete(good);
+        Optional<Good> notFoundGood = goodService.update(good);
+        assertFalse(notFoundGood.isPresent());;
+    }
 
     @Test
     @Transactional
