@@ -23,10 +23,6 @@ public class GoodService {
 		return goodRepository.save(good);
 	}
 
-	public List<Good> saveAll(List<Good> goods) {
-		return goodRepository.saveAll(goods);
-	}
-
 	public void delete(Good good) {
         goodRepository.delete(good);
     }
@@ -45,10 +41,6 @@ public class GoodService {
 
 	public Optional<Good> findById(Long id) {
 		return goodRepository.findById(id);
-	}
-
-	public List<Good> findAll() {
-		return goodRepository.findAll();
 	}
 
 	public List<Good> findByNameContaining(String part) {
