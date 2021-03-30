@@ -59,8 +59,8 @@
     <postgresql.port>5432</postgresql.port>
     <postgresql.database.postgres>postgres</postgresql.database.postgres>
     <postgresql.database.appliances>appliances</postgresql.database.appliances>
-    <postgresql.username>postgres</postgresql.username>
-    <postgresql.password>jSetvxar</postgresql.password>
+    <postgresql.username>admin</postgresql.username>
+    <postgresql.password>admin</postgresql.password>
 
     <project.db.dir>${project.basedir}/db</project.db.dir>
     <create-db.script>${project.db.dir}/create-db.sql</create-db.script>
