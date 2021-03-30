@@ -76,6 +76,9 @@
     <junit5.version>5.8.0-M1</junit5.version>
     <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
 
+    <!-- exclude the classes of this package from codecov report -->
+    <backend.entity.dir>backend/entity</backend.entity.dir>
+
     <spring-boot.version>2.4.3</spring-boot.version>
 
   </properties>
@@ -205,6 +208,11 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco-maven-plugin.version}</version>
+        <configuration>
+          <excludes>
+            <exclude>**/${backend.entity.dir}/*.class</exclude>
+          </excludes>
+        </configuration>
         <executions>
           <execution>
             <id>prepare-agent</id>
