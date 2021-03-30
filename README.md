@@ -60,19 +60,32 @@
     *Main page - Goods → Goods page - Search panel*
 
 ## Сборка и тестирование  
+
+### Дополнительные требования  
+
 Для успешной сборки приложения необходимо выполнение следующих условий.  
+  
     1. Установленная СУБД PostgreSQL версии не ниже 11.  
     2. Наличие суперпользователя admin с паролем admin. Его можно создать такой командой:   
 
 ```
 postgres=# create user admin superuser password 'admin';
 ```
+### Цикл сборки  
 
 Приложение собирается с помощью фреймворка [Apache Maven](https://maven.apache.org/ "Apache Maven"), поэтому доступны все этапы [основного цикла сбоки maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#a-build-lifecycle-is-made-up-of-phases "Maven Build Lifecycle"). В частности,  
 ```
 [user@domain:~/appliances] mvn compile  # компиляция исходного кода  
 [user@domain:~/appliances] mvn test     # запуск юнит-тестов 
-```
- 
+```  
+
+### Генерация покрытия  
+
 Для создания code coverage используется фреймворк [Jacoco](https://www.jacoco.org/jacoco/ "Jacoco"). Покрытие автоматически генерируется при запуске тестов.  
-Вся информация о покрытии помещается в папку ``appliances/target/site/jacoco``. Наиболее наглядным является отчет в html-формате (``appliances/target/site/jacoco/index.html`` и дальше по ссылкам).
+Вся информация о покрытии помещается в папку ``appliances/target/site/jacoco``. Наиболее наглядным является отчет в html-формате (``appliances/target/site/jacoco/index.html`` и дальше по ссылкам).  
+
+### Примеры страниц отчета о покрытии
+
+![Jacoco report, main page](images/jacoco-report-main-page.png)  
+
+![Jacoco report, entity.service](images/jacoco-report-entity-service.png) 
