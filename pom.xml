@@ -35,7 +35,6 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <!-- <version>${spring-boot.version}</version> -->
     <version>2.4.3</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
@@ -75,11 +74,10 @@
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <junit5.version>5.8.0-M1</junit5.version>
     <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-
-    <!-- exclude the classes of this package from codecov report -->
+    <!-- exclude this package classes from codecov report -->
     <backend.entity.dir>backend/entity</backend.entity.dir>
 
-    <spring-boot.version>2.4.3</spring-boot.version>
+    <maven-glassfish-plugin.version>2.1</maven-glassfish-plugin.version>
 
   </properties>
 
@@ -201,7 +199,6 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version>
       </plugin>
 
       <plugin>
@@ -229,6 +226,33 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- <plugin>
+        <groupId>org.glassfish.maven.plugin</groupId>
+        <artifactId>maven-glassfish-plugin</artifactId>
+        <version>${maven-glassfish-plugin.version}</version>
+        <configuration>
+          <glassfishDirectory>
+            /home/alex000/glassfish5/glassfish
+          </glassfishDirectory>
+          <user>admin</user>
+          <adminPassword>admin</adminPassword>
+          <domain>
+              <name>domain1</name>
+              <httpPort>8080</httpPort>
+              <adminPort>4848</adminPort>
+          </domain>
+          <components>
+            <component>
+              <name>appliances</name>
+              <artifact>target/appliances-1.0-SNAPSHOT.jar</artifact>
+            </component>
+          </components>
+          <debug>true</debug>
+          <terse>false</terse>
+          <echo>true</echo>
+        </configuration>
+      </plugin> -->
 
     </plugins>
   </build>
@@ -261,12 +285,10 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
-      <version>${spring-boot.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>${spring-boot.version}</version>
     </dependency>
 
     <dependency>
@@ -279,7 +301,6 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <version>${spring-boot.version}</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -300,6 +321,11 @@
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit5.version}</version>
       <scope>test</scope>
+  </dependency>
+
+  <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
   </dependency>
 
   </dependencies>
