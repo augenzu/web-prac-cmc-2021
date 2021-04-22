@@ -43,6 +43,10 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+
 	public List<User> findByNameContaining(String name) {
 		return userRepository.findByNameContainingIgnoreCase(name);
 	}

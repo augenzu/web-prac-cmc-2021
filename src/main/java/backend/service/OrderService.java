@@ -49,6 +49,10 @@ public class OrderService {
 		return orderRepository.findById(id);
 	}
 
+	public List<Order> findAll() {
+		return orderRepository.findAll();
+	}
+
 	public List<Order> findByOrderedAtBetweenOrderByOrderedAtDesc(LocalDateTime beg, LocalDateTime end) {
 		return orderRepository.findByOrderedAtBetweenOrderByOrderedAtDesc(beg, end);
 	}

@@ -43,6 +43,10 @@ public class GoodService {
 		return goodRepository.findById(id);
 	}
 
+	public List<Good> findAll() {
+		return goodRepository.findAll();
+	}
+
 	public List<Good> findByNameContaining(String part) {
 		return goodRepository.findByNameContainingIgnoreCase(part);
 	}
