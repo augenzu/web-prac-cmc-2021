@@ -132,12 +132,6 @@ public class Order implements Serializable {
 
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((orderedAt == null) ? 0 : orderedAt.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((deliveryAddress == null) ? 0 : deliveryAddress.hashCode());
-		result = prime * result + ((deliverOn == null) ? 0 : deliverOn.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
-		result = prime * result + ((goods == null) ? 0 : goods.hashCode());
 		
 		return result;
 	}
