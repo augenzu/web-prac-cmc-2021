@@ -31,7 +31,10 @@ public class AppType implements Serializable {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "app_type_id")
+	@JoinColumn(name = "app_type_id",
+			nullable = false,
+			insertable = false,
+			updatable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
     private List<Good> goods = new ArrayList<>();
 

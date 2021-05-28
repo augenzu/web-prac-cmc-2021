@@ -16,6 +16,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "good")
 public class Good implements Serializable {
@@ -49,6 +52,7 @@ public class Good implements Serializable {
 	private String description;
 
 	@ManyToMany(cascade = CascadeType.ALL)
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	@JoinTable(name = "order_good",
 			joinColumns = @JoinColumn(name = "good_id"),
 			inverseJoinColumns = @JoinColumn(name = "order_id")

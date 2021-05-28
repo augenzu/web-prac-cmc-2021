@@ -31,7 +31,10 @@ public class Status implements Serializable {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "status_id")
+	@JoinColumn(name = "status_id",
+			nullable = false,
+			insertable = false,
+			updatable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
     private List<Order> orders = new ArrayList<>();
 

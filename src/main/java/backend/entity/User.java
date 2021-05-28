@@ -40,7 +40,10 @@ public class User implements Serializable {
 	private String number;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id",
+			nullable = false,
+			insertable = false,
+			updatable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Order> orders = new ArrayList<>();
 

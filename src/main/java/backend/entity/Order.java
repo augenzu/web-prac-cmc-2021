@@ -48,8 +48,8 @@ public class Order implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@OnDelete(action=OnDeleteAction.CASCADE)
+	@ManyToMany(cascade = CascadeType.DETACH)
+	@OnDelete(action=OnDeleteAction.NO_ACTION)
 	@JoinTable(name = "order_good",
 			joinColumns = @JoinColumn(name = "order_id"),
 			inverseJoinColumns = @JoinColumn(name = "good_id")
