@@ -11,7 +11,7 @@ import backend.entity.Order;
 import backend.service.OrderService;
 
 @Controller
-public class OrdersController {
+public class OrderController {
     @Autowired
     private OrderService orderService;
     

@@ -11,7 +11,7 @@ import backend.entity.Good;
 import backend.service.GoodService;
 
 @Controller
-public class GoodsController {
+public class GoodController {
     @Autowired
     private GoodService goodService;
     
