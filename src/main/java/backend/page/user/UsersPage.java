@@ -1,34 +1,36 @@
 package backend.page.user;
 
-import org.fluentlenium.core.FluentPage;
-import org.fluentlenium.core.annotation.PageUrl;
-import org.fluentlenium.core.domain.FluentList;
-import org.fluentlenium.core.domain.FluentWebElement;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-@PageUrl("/users")
-public class UsersPage extends FluentPage {
-    private static final String ADD_USER_BUTTON = "#add-user-button";
-    private static final String LINKS_TO_USER_PAGES = "td a";
+import backend.page.prototype.TemplatePage;
 
-    @FindBy(css = ADD_USER_BUTTON)
-    private FluentWebElement addUserButton;
+public class UsersPage extends TemplatePage {
+    @FindBy(id = "add-user-button")
+    private WebElement addUserButton;
 
-    @FindBy(css = LINKS_TO_USER_PAGES)
-    private FluentList<FluentWebElement> linksToUserPages;
+    @FindBy(css = "td a")
+    private List<WebElement> linksToUserPages;
+
+    public UsersPage(WebDriver driver) {
+        super(driver, "Users");
+    }
 
     public UserEditPage goToAddNewUserPage() {
         addUserButton.click();
-        return newInstance(UserEditPage.class);
+        return new UserEditPage(driver);
     }
 
     public UserInfoPage goToFirstUserInListPage() {
-        linksToUserPages.first().click();
-        return newInstance(UserInfoPage.class);
+        linksToUserPages.get(0).click();
+        return new UserInfoPage(driver);
     }
 
     public UserInfoPage goToNthUserInListPage(int index) {
         linksToUserPages.get(index).click();
-        return newInstance(UserInfoPage.class);
+        return new UserInfoPage(driver);
     }
 }
