@@ -6,20 +6,54 @@
         <link href="css/common.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Users</h1>
-        <a href="/">Home</a>
-        <br>
-        <table>
-            <tr>
-                <th>id</th>
-                <th>name</th>
-            </tr>
-            <th:block th:each="user : ${users}">
-                <tr>
-                    <td th:text="${user.id}"></td>
-                    <td th:text="${user.name}"></td>
-                </tr>
-            </th:block>
-        </table>
+        <header class="page-heading">
+            <h1>
+                Users
+            </h1>
+        </header>
+        <aside class="sidebar">
+            <ul class="navigation">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/users">Users</a>
+                </li>
+                <li>
+                    <a href="/goods">Goods</a>
+                </li>
+                <li>
+                    <a href="/orders">Orders</a>
+                </li>
+            </ul>
+        </aside>
+        <div class="page-content">
+            <form method="POST" action="/user-edit">
+                <button id="add-user-button" class="btn" type="submit">
+                    Add user
+                </button>
+            </form>
+            <br>
+            <div id="users-list">
+                <table>
+                    <tr>
+                        <th>name</th>
+                        <th>email</th>
+                    </tr>
+                    <th:block th:each="user : ${users}">
+                        <tr>
+                            <td>
+                                <a th:href="'/user-info?user-id=' + ${user.id}">
+                                    <span th:text="${user.name}"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <span th:text="${user.email}"></span>
+                            </td>
+                        </tr>
+                    </th:block>
+                </table>
+            </div>
+        </div>
     </body>
 </html>

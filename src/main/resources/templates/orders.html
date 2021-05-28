@@ -6,24 +6,45 @@
         <link href="css/common.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Orders</h1>
-        <a href="/">Home</a>
-        <br>
-        <table>
-            <tr>
-                <th>id</th>
-                <th>name</th>
-            </tr>
-            <th:block th:each="order : ${orders}">
-                <tr>
-                    <td th:text="${order.id}"></td>
-                    <td th:text="${order.orderedAt}"></td>
-                    <td th:text="${order.deliveryAddress}"></td>
-                    <td th:text="${order.deliverOn}"></td>
-                    <td th:text="${order.status.name}"></td>
-                </tr>
-            </th:block>
-        </table>
+        <header class="page-heading">
+            <h1>
+                Orders
+            </h1>
+        </header>
+        <aside class="sidebar">
+            <ul class="navigation">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/users">Users</a>
+                </li>
+                <li>
+                    <a href="/goods">Goods</a>
+                </li>
+                <li>
+                    <a href="/orders">Orders</a>
+                </li>
+            </ul>
+        </aside>
+        <div class="page-content">
+            <div id="orders-list">
+                <table>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                    </tr>
+                    <th:block th:each="order : ${orders}">
+                        <tr>
+                            <td th:text="${order.id}"></td>
+                            <td th:text="${order.orderedAt}"></td>
+                            <td th:text="${order.deliveryAddress}"></td>
+                            <td th:text="${order.deliverOn}"></td>
+                            <td th:text="${order.status.name}"></td>
+                        </tr>
+                    </th:block>
+                </table>
+            </div>
+        </div>
     </body>
 </html>
-
