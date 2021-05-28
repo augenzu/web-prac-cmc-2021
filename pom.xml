@@ -73,11 +73,15 @@
 
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <junit5.version>5.8.0-M1</junit5.version>
+    <selenium.version>3.141.59</selenium.version>
+    <!-- do not perform system testing on test-classes of this package  -->
+    <test.unit.dir>unit</test.unit.dir>
+
     <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-    <!-- exclude this package classes from codecov report -->
+    <!-- exclude classes of this package from codecov report -->
     <backend.entity.dir>backend/entity</backend.entity.dir>
 
-    <maven-glassfish-plugin.version>2.1</maven-glassfish-plugin.version>
+    <!-- <maven-glassfish-plugin.version>2.1</maven-glassfish-plugin.version> -->
 
   </properties>
 
@@ -194,6 +198,12 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
+        <configuration>
+          <skipTests>${false}</skipTests>
+          <excludes>
+            <exclude>**/${test.unit.dir}/*Test.class</exclude>
+          </excludes>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -314,18 +324,34 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit5.version}</version>
-      <scope>test</scope>
+      <!-- <scope>test</scope> -->
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit5.version}</version>
-      <scope>test</scope>
-  </dependency>
+      <!-- <scope>test</scope> -->
+    </dependency>
 
   <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-chrome-driver</artifactId>
+    <version>3.9.1</version>
+  </dependency>
+  <dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-firefox-driver</artifactId>
+    <version>3.9.1</version>
+  </dependency>
+  <dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>3.9.1</version>
   </dependency>
 
   </dependencies>
