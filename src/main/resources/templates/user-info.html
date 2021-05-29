@@ -38,7 +38,7 @@
             </div>
             <br>
             <div id="user-actions">
-                <form method="POST" action="/user-edit">
+                <form method="GET" action="/user-edit">
                     <input type="hidden" name="user-id" th:value="${user.id}">
                     <button id="edit-user-button" class="btn" type="submit">
                         Edit user info

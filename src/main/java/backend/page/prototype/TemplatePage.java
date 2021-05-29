@@ -39,7 +39,6 @@ public class TemplatePage extends PageObject {
 
     public void isAt() {
         wait.until(ExpectedConditions.titleIs(title));
-        // assertEquals(title, driver.getTitle());
         assertTrue(sidebar.isDisplayed());
         assertTrue(pageContent.isDisplayed());
     }

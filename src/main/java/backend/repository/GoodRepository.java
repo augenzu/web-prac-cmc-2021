@@ -16,7 +16,4 @@ public interface GoodRepository extends JpaRepository<Good, Long> {
     List<Good> findByDescriptionContainingIgnoreCase(String part);
 
     List<Good> findByPriceBetween(Double low, double high);
-
-    // @Query("select g from Good g where g.quantity > 0")
-    // List<Good> findAllAvailable();
 }

@@ -28,7 +28,7 @@
             </ul>
         </aside>
         <div class="page-content">
-            <form method="POST" action="/user-edit">
+            <form method="GET" action="/user-edit">
                 <button id="add-user-button" class="btn" type="submit">
                     Add user
                 </button>
@@ -47,9 +47,7 @@
                                     <span th:text="${user.name}"></span>
                                 </a>
                             </td>
-                            <td>
-                                <span th:text="${user.email}"></span>
-                            </td>
+                            <td th:text="${user.email}"></td>
                         </tr>
                     </th:block>
                 </table>

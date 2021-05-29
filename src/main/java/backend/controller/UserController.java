@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/user-info")
-    public String getUserInfo(@RequestParam(name = "user-id", required = true) Long id,
+    public String getUserInfo(@RequestParam(name = "user-id") Long id,
             Model model) {
         Optional<User> foundUser= userService.findById(id);
         if (foundUser.isPresent()) {
@@ -49,7 +49,7 @@ public class UserController {
      * @param model
      * @return
      */
-    @PostMapping("/user-edit")
+    @GetMapping("/user-edit")
     public String editUserInfo(@RequestParam(name = "user-id", required = false) Long id,
             Model model) {
         if (id == null) {
@@ -125,15 +125,13 @@ public class UserController {
     }
 
     @PostMapping("/user-delete")
-    public String deleteUser(@RequestParam(name = "user-id", required = true) Long id,
+    public String deleteUser(@RequestParam(name = "user-id") Long id,
             Model model) {
-        System.out.println("\t\t\tid is " + id);
         Optional<User> foundUser = userService.findById(id);
         if (!foundUser.isPresent()) {
             model.addAttribute("error", new ErrorMsg("There is no user with id=" + id));
             return "invalid-action";
         } else {
-            System.out.println("\t\t\tfound user");
             userService.delete(foundUser.get());
             return "redirect:/users";
         }
