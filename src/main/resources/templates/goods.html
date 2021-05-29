@@ -28,16 +28,34 @@
             </ul>
         </aside>
         <div class="page-content">
+            <form method="GET" action="/good-edit">
+                <button id="add-good-button" class="btn" type="submit">
+                    Add good
+                </button>
+            </form>
+            <br>
             <div id="goods-list">
                 <table>
                     <tr>
-                        <th>id</th>
                         <th>name</th>
+                        <th>type</th>
+                        <th>price</th>
+                        <th>left</th>
+                        <th>made in</th>
+                        <th>company</th>
                     </tr>
                     <th:block th:each="good : ${goods}">
                         <tr>
-                            <td th:text="${good.id}"></td>
-                            <td th:text="${good.name}"></td>
+                            <td>
+                                <a th:href="'/good-info?good-id=' + ${good.id}">
+                                    <span th:text="${good.name}"></span>
+                                </a>
+                            </td>
+                            <td th:text="${good.appType.name}"></td>
+                            <td th:text="${good.price}"></td>
+                            <td th:text="${good.quantity}"></td>
+                            <td th:text="${good.assemblyPlace}"></td>
+                            <td th:text="${good.company}"></td>
                         </tr>
                     </th:block>
                 </table>
