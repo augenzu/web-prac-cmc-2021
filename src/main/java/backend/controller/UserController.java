@@ -23,7 +23,7 @@ public class UserController {
     public String getUsers(Model model) {
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
-        return "users";
+        return "user/users";
     }
 
     @GetMapping("/user-info")
@@ -35,10 +35,10 @@ public class UserController {
             List<Order> orders =  userService.findUserOrdersById(id);
             model.addAttribute("user", user);
             model.addAttribute("orders", orders);
-            return "user-info";
+            return "user/user-info";
         } else {
             model.addAttribute("error", new ErrorMsg("There is no user with id=" + id));
-            return "invalid-action";
+            return "error/invalid-action";
         }
     }
 
@@ -54,15 +54,15 @@ public class UserController {
             Model model) {
         if (id == null) {
             model.addAttribute("user", new User());
-            return "user-edit";
+            return "user/user-edit";
         } else {
             Optional<User> foundUser = userService.findById(id);
             if (!foundUser.isPresent()) {
                 model.addAttribute("error", new ErrorMsg("There is no user with id=" + id));
-                return "invalid-action";
+                return "error/invalid-action";
             } else {
                 model.addAttribute("user", foundUser.get());
-                return "user-edit";
+                return "user/user-edit";
             }
         }
     }
@@ -99,7 +99,7 @@ public class UserController {
             Optional<User> foundUser = userService.findById(id);
             if (!foundUser.isPresent()) {
                 model.addAttribute("error", new ErrorMsg("There is no user with id=" + id));
-                return "invalid-action";
+                return "error/invalid-action";
             }
             else {
                 User user = foundUser.get();
@@ -120,7 +120,7 @@ public class UserController {
             return redirect;
         } else {
             model.addAttribute("error", new ErrorMsg("Cannot save user info"));
-            return "invalid-action";
+            return "error/invalid-action";
         }
     }
 
@@ -130,7 +130,7 @@ public class UserController {
         Optional<User> foundUser = userService.findById(id);
         if (!foundUser.isPresent()) {
             model.addAttribute("error", new ErrorMsg("There is no user with id=" + id));
-            return "invalid-action";
+            return "error/invalid-action";
         } else {
             userService.delete(foundUser.get());
             return "redirect:/users";

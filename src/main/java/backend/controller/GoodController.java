@@ -27,7 +27,7 @@ public class GoodController {
     public String getGoods(Model model) {
         List<Good> goods = goodService.findAll();
         model.addAttribute("goods", goods);
-        return "goods";
+        return "good/goods";
     }
 
     @GetMapping("/good-info")
@@ -37,10 +37,10 @@ public class GoodController {
         if (foundGood.isPresent()) {
             Good good = foundGood.get();
             model.addAttribute("good", good);
-            return "good-info";
+            return "good/good-info";
         } else {
             model.addAttribute("error", new ErrorMsg("There is no good with id=" + id));
-            return "invalid-action";
+            return "error/invalid-action";
         }
     }
 
@@ -58,17 +58,17 @@ public class GoodController {
         if (id == null) {
             model.addAttribute("good", new Good());
             model.addAttribute("types", appTypes);
-            return "good-edit";
+            return "good/good-edit";
         } else {
             Optional<Good> foundGood = goodService.findById(id);
             if (!foundGood.isPresent()) {
                 model.addAttribute("error", new ErrorMsg("There is no good with id=" + id + ", so cannot edit"));
-                return "invalid-action";
+                return "error/invalid-action";
             } else {
                 Good good = foundGood.get();
                 model.addAttribute("good", good);
                 model.addAttribute("types", appTypes);
-                return "good-edit";
+                return "good/good-edit";
             }
         }
     }
@@ -100,13 +100,13 @@ public class GoodController {
         if (price <= 0.0) {
             model.addAttribute("error",
                     new ErrorMsg("The price must be a positive real number!"));
-            return "invalid-action";
+            return "error/invalid-action";
         }
 
         if (quantity < 0) {
             model.addAttribute("error",
                     new ErrorMsg("The quantity must be a natural number!"));
-            return "invalid-action";
+            return "error/invalid-action";
         }
 
         Optional<AppType> foundAppType = appTypeService.findById(appTypeId);
@@ -115,7 +115,7 @@ public class GoodController {
                     new ErrorMsg("Experienced some trouble. Cannot find app type with id="
                     + id
                     + ".\n Please, try again."));
-            return "invalid-action";
+            return "error/invalid-action";
         }
         AppType appType = foundAppType.get();
 
@@ -132,7 +132,7 @@ public class GoodController {
             Optional<Good> foundGood = goodService.findById(id);
             if (!foundGood.isPresent()) {
                 model.addAttribute("error", new ErrorMsg("There is no good with id=" + id + ", so cannot update"));
-                return "invalid-action";
+                return "error/invalid-action";
             } else {
                 Good good = foundGood.get();
                 good.setAppType(appType);
@@ -155,7 +155,7 @@ public class GoodController {
             return redirect;
         } else {
             model.addAttribute("error", new ErrorMsg("Cannot save good info"));
-            return "invalid-action";
+            return "error/invalid-action";
         }
     }
 
@@ -165,7 +165,7 @@ public class GoodController {
         Optional<Good> foundGood = goodService.findById(id);
         if (!foundGood.isPresent()) {
             model.addAttribute("error", new ErrorMsg("There is no good with id=" + id));
-            return "invalid-action";
+            return "error/invalid-action";
         } else {
             Good good = foundGood.get();
             if (good.getOrders().size() > 0) {
@@ -173,7 +173,7 @@ public class GoodController {
                         new ErrorMsg("Cannot delete item "
                         + good.getName()
                         + ". There are orders containing it."));
-                return "invalid-action";
+                return "error/invalid-action";
             } else {
                 goodService.delete(foundGood.get());
                 return "redirect:/goods";
