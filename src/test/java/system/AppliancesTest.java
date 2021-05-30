@@ -17,6 +17,7 @@ import backend.entity.User;
 import backend.page.error.InvalidActionPage;
 import backend.page.good.GoodEditPage;
 import backend.page.good.GoodInfoPage;
+import backend.page.good.GoodsFoundPage;
 import backend.page.good.GoodsPage;
 import backend.page.home.HomePage;
 import backend.page.order.CheckoutPage;
@@ -121,6 +122,31 @@ public class AppliancesTest extends SeleniumTest{
         // delete good
         goodsPage = editedGoodInfoPage.deleteGood();
         goodsPage.isAt();
+    }
+
+    @Test
+    public void searchGoodTest() {
+        driver.get(HOME);
+        HomePage homePage = new HomePage(driver);
+        homePage.isAt();
+        GoodsPage goodsPage = homePage.goToGoodsPage();
+        goodsPage.isAt();
+        GoodsFoundPage goodsFoundPage = goodsPage.searchForGoodsByQuery("coffeemaker");
+        goodsFoundPage.isAt();
+        assertEquals(1, goodsFoundPage.getGoodsFoundNumber());
+
+        goodsPage = goodsFoundPage.goToGoodsPage();
+        goodsPage.isAt();
+        goodsFoundPage = goodsPage.searchForGoodsByQuery("steel");
+        goodsFoundPage.isAt();
+        assertEquals(4, goodsFoundPage.getGoodsFoundNumber());
+
+
+        goodsPage = goodsFoundPage.goToGoodsPage();
+        goodsPage.isAt();
+        goodsFoundPage = goodsPage.searchForGoodsByQuery("no-such-good");
+        goodsFoundPage.isAt();
+        assertEquals(0, goodsFoundPage.getGoodsFoundNumber());
     }
 
     @Test
