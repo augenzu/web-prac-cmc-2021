@@ -47,6 +47,10 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	public List<User> findAllByOrderByName() {
+		return userRepository.findAllByOrderByName();
+	}
+
 	public List<User> findByNameContaining(String name) {
 		return userRepository.findByNameContainingIgnoreCase(name);
 	}

@@ -47,6 +47,10 @@ public class GoodService {
 		return goodRepository.findAll();
 	}
 
+	public List<Good> findAllByOrderByName() {
+		return goodRepository.findAllByOrderByName();
+	}
+
 	public List<Good> findByNameContaining(String part) {
 		return goodRepository.findByNameContainingIgnoreCase(part);
 	}
@@ -68,8 +72,6 @@ public class GoodService {
 	}
 
 	public boolean hasOrderEntries(Good param) {
-		// Integer num = goodRepository.numberOfUndeliveredOrderEntries(param);
-		// return num > 0 ? true : false;
 		return goodRepository.hasOrderEntries(param);
 	}
 }

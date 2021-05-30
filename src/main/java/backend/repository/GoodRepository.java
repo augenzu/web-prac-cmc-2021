@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import backend.entity.Good;
  
 public interface GoodRepository extends JpaRepository<Good, Long> {
+    List<Good> findAllByOrderByName();
+
     List<Good> findByNameContainingIgnoreCase(String part);
 
     List<Good> findByCompanyContainingIgnoreCase(String part);

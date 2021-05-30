@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   List<User> findByEmailIgnoreCase(String email);
 
+  List<User> findAllByOrderByName();
+
   @Query("select u.orders from User u where u.id = :id")
   List<Order> findUserOrdersById(@Param("id") Long id);
 }
