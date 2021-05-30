@@ -30,7 +30,7 @@ public class GoodEditPage extends TemplatePage {
     @FindBy(id = "good-type")
     private WebElement goodTypeElement;
 
-    private Select goodTypeSelect = new Select(goodTypeElement);
+    private Select goodTypeSelector = new Select(goodTypeElement);
 
     @FindBy(id = "save-good-button")
     private WebElement saveGoodButton;
@@ -53,7 +53,7 @@ public class GoodEditPage extends TemplatePage {
         goodAssemblyPlaceField.sendKeys(good.getAssemblyPlace());
         goodQuantityField.sendKeys(good.getQuantity().toString());
         goodDescriptionField.sendKeys(good.getDescription());
-        goodTypeSelect.selectByVisibleText(good.getAppType().getName());;
+        goodTypeSelector.selectByVisibleText(good.getAppType().getName());
 
         saveGoodButton.click();
         return new GoodInfoPage(driver);

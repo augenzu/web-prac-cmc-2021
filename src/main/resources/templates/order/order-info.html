@@ -8,7 +8,6 @@
     <body>
         <header class="page-heading">
             <h2>
-                <!-- <span th:text="'Order for ' + ${order.user.name}"></span> -->
                 Order for
                 <a th:href="'/user-info?user-id=' + ${order.user.id}">
                     <span th:text="${order.user.name}"></span>
@@ -72,7 +71,7 @@
             <div id="order-actions">
                 <form method="POST" action="/order-update-status">
                     <input type="hidden" name="order-id" th:value="${order.id}">
-                    <button id="order-update-status-button" class="btn" type="submit">
+                    <button id="update-order-status-button" class="btn" type="submit">
                         Update order status
                     </button>
                 </form>

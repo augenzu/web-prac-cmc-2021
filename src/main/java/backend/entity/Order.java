@@ -47,14 +47,6 @@ public class Order implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	// @ManyToMany(cascade = CascadeType.DETACH)
-	// @OnDelete(action=OnDeleteAction.NO_ACTION)
-	// @JoinTable(name = "order_good",
-	// 		joinColumns = @JoinColumn(name = "order_id"),
-	// 		inverseJoinColumns = @JoinColumn(name = "good_id")
-	// )
-	// private List<Good> goods = new ArrayList<>();
-
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "order_id",
 			nullable = false,
@@ -76,16 +68,6 @@ public class Order implements Serializable {
 		status.addOrder(this);
 		user.addOrder(this);
 	}
-
-	// public void addGood(Good good) {
-	// 	goods.add(good);
-	// 	good.addOrder(this);
-	// }
-
-	// public void removeGood(Good good) {
-	// 	goods.remove(good);
-	// 	good.removeOrder(this);
-	// }
 
 	public Long getId() {
 		return id;
@@ -128,10 +110,6 @@ public class Order implements Serializable {
 	public User getUser() {
 		return user;
 	}
-
-	// public List<Good> getGoods() {
-	// 	return goods;
-	// }
 
 	public List<OrderGood> getGoodItems() {
 		return goodItems;
