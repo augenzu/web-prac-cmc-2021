@@ -25,7 +25,7 @@ public class GoodController {
     
     @GetMapping("goods")
     public String getGoods(Model model) {
-        List<Good> goods = goodService.findAll();
+        List<Good> goods = goodService.findAllByOrderByName();
         model.addAttribute("goods", goods);
         return "good/goods";
     }
@@ -96,18 +96,6 @@ public class GoodController {
             Model model) {
         boolean successfullySaved = false;
         Good savedGood = null;
-
-        // if (price <= 0.0) {
-        //     model.addAttribute("error",
-        //             new ErrorMsg("The price must be a positive real number!"));
-        //     return "error/invalid-action";
-        // }
-
-        // if (quantity < 0) {
-        //     model.addAttribute("error",
-        //             new ErrorMsg("The quantity must be a natural number!"));
-        //     return "error/invalid-action";
-        // }
 
         Optional<AppType> foundAppType = appTypeService.findById(appTypeId);
         if (!foundAppType.isPresent()) {
