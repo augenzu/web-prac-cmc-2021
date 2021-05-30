@@ -132,6 +132,13 @@ public class OrderController {
             Map.Entry<Good, Integer> pair = it.next();
             Good good = (Good) pair.getKey();
             Integer number = (Integer) pair.getValue();
+            if (good.getQuantity() < number) {
+                number = good.getQuantity();
+                good.setQuantity(0);
+            } else {
+                good.setQuantity(good.getQuantity() - number);
+            }
+            goodService.update(good);
             OrderGood item = new OrderGood(order, good, number);
             order.getGoodItems().add(item);
         }
@@ -183,6 +190,16 @@ public class OrderController {
             Order order = foundOrder.get();
             model.addAttribute("order", order);
             model.addAttribute("items", order.getGoodItems());
+
+            Double totalPrice = 0.0;
+            List<OrderGood> items = order.getGoodItems();
+            Iterator<OrderGood> it = items.iterator();
+            while (it.hasNext()) {
+                OrderGood item = it.next();
+                totalPrice += item.getQuantity() * item.getGood().getPrice();
+            }
+            model.addAttribute("total", totalPrice);
+
             return "order/order-info";
         } else {
             model.addAttribute("error", new ErrorMsg("There is no order with id=" + id));
