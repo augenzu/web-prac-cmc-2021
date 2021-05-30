@@ -62,7 +62,7 @@ public class GoodController {
         } else {
             Optional<Good> foundGood = goodService.findById(id);
             if (!foundGood.isPresent()) {
-                model.addAttribute("error", new ErrorMsg("There is no good with id=" + id + ", so cannot edit"));
+                model.addAttribute("error", new ErrorMsg("There is no good with id=" + id));
                 return "error/invalid-action";
             } else {
                 Good good = foundGood.get();
@@ -97,17 +97,17 @@ public class GoodController {
         boolean successfullySaved = false;
         Good savedGood = null;
 
-        if (price <= 0.0) {
-            model.addAttribute("error",
-                    new ErrorMsg("The price must be a positive real number!"));
-            return "error/invalid-action";
-        }
+        // if (price <= 0.0) {
+        //     model.addAttribute("error",
+        //             new ErrorMsg("The price must be a positive real number!"));
+        //     return "error/invalid-action";
+        // }
 
-        if (quantity < 0) {
-            model.addAttribute("error",
-                    new ErrorMsg("The quantity must be a natural number!"));
-            return "error/invalid-action";
-        }
+        // if (quantity < 0) {
+        //     model.addAttribute("error",
+        //             new ErrorMsg("The quantity must be a natural number!"));
+        //     return "error/invalid-action";
+        // }
 
         Optional<AppType> foundAppType = appTypeService.findById(appTypeId);
         if (!foundAppType.isPresent()) {
@@ -131,7 +131,7 @@ public class GoodController {
         } else {
             Optional<Good> foundGood = goodService.findById(id);
             if (!foundGood.isPresent()) {
-                model.addAttribute("error", new ErrorMsg("There is no good with id=" + id + ", so cannot update"));
+                model.addAttribute("error", new ErrorMsg("There is no good with id=" + id));
                 return "error/invalid-action";
             } else {
                 Good good = foundGood.get();
@@ -168,11 +168,11 @@ public class GoodController {
             return "error/invalid-action";
         } else {
             Good good = foundGood.get();
-            if (good.getOrders().size() > 0) {
+            if (goodService.hasOrderEntries(good)) {
                 model.addAttribute("error",
-                        new ErrorMsg("Cannot delete item "
+                        new ErrorMsg("Cannot delete item ["
                         + good.getName()
-                        + ". There are orders containing it."));
+                        + "]. There are orders containing it."));
                 return "error/invalid-action";
             } else {
                 goodService.delete(foundGood.get());

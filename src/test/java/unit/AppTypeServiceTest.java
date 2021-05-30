@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import backend.Appliances;
 import backend.entity.AppType;
-import backend.entity.Good;
 import backend.service.AppTypeService;
 
 @SpringBootTest(classes = Appliances.class)
@@ -72,19 +71,5 @@ public class AppTypeServiceTest {
         foundAppTypes.forEach(it -> foundAppTypeNames.add(it.getName()));
 
         assertIterableEquals(allTheAppTypeNames, foundAppTypeNames);
-    }
-
-    @Test
-    @Transactional
-    public void findGoodsByAppTypeNameTest() {
-        String existingAppTypeName = "microwave";
-        AppType existingAppType = appTypeService.findByName(existingAppTypeName).get();
-        List<Good> goods = existingAppType.getGoods();
-        List<Good> foundGoods = appTypeService.findGoodsByAppTypeName(existingAppTypeName);
-        assertIterableEquals(goods, foundGoods);
-
-        String nonExistentAppTypeName = "no_such_good";
-        List<Good> notFoundGoods = appTypeService.findGoodsByAppTypeName(nonExistentAppTypeName);
-        assertTrue(notFoundGoods.isEmpty());
     }
 }

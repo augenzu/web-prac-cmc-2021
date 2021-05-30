@@ -1,23 +1,15 @@
 package backend.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "good")
@@ -51,14 +43,6 @@ public class Good implements Serializable {
 	@Column(name = "good_description")
 	private String description;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@OnDelete(action=OnDeleteAction.CASCADE)
-	@JoinTable(name = "order_good",
-			joinColumns = @JoinColumn(name = "good_id"),
-			inverseJoinColumns = @JoinColumn(name = "order_id")
-	)
-	private List<Order> orders = new ArrayList<>();
-
 	public Good() {}
     
   	public Good(AppType appType, String name,
@@ -71,16 +55,7 @@ public class Good implements Serializable {
 		this.assemblyPlace = assemblyPlace;
 		this.quantity = quantity;
 		this.description = description;
-		appType.addGood(this);
   }
-
-	public void addOrder(Order order) {
-		orders.add(order);
-	}
-
-	public void removeOrder(Order order) {
-		orders.remove(order);
-	}
 
 	public Long getId() {
 		return id;
@@ -91,9 +66,7 @@ public class Good implements Serializable {
 	}
 
 	public void setAppType(AppType appType) {
-		this.appType.removeGood(this);
 		this.appType = appType;
-		appType.addGood(this);
 	}
 
 	public String getName() {
@@ -142,10 +115,6 @@ public class Good implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<Order> getOrders() {
-		return orders;
 	}
 
 	@Override

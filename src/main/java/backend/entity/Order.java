@@ -13,9 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
@@ -48,13 +47,21 @@ public class Order implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToMany(cascade = CascadeType.DETACH)
-	@OnDelete(action=OnDeleteAction.NO_ACTION)
-	@JoinTable(name = "order_good",
-			joinColumns = @JoinColumn(name = "order_id"),
-			inverseJoinColumns = @JoinColumn(name = "good_id")
-	)
-	private List<Good> goods = new ArrayList<>();
+	// @ManyToMany(cascade = CascadeType.DETACH)
+	// @OnDelete(action=OnDeleteAction.NO_ACTION)
+	// @JoinTable(name = "order_good",
+	// 		joinColumns = @JoinColumn(name = "order_id"),
+	// 		inverseJoinColumns = @JoinColumn(name = "good_id")
+	// )
+	// private List<Good> goods = new ArrayList<>();
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "order_id",
+			nullable = false,
+			insertable = false,
+			updatable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private List<OrderGood> goodItems = new ArrayList<>();
 
 	public Order() {}
 
@@ -70,15 +77,15 @@ public class Order implements Serializable {
 		user.addOrder(this);
 	}
 
-	public void addGood(Good good) {
-		goods.add(good);
-		good.addOrder(this);
-	}
+	// public void addGood(Good good) {
+	// 	goods.add(good);
+	// 	good.addOrder(this);
+	// }
 
-	public void removeGood(Good good) {
-		goods.remove(good);
-		good.removeOrder(this);
-	}
+	// public void removeGood(Good good) {
+	// 	goods.remove(good);
+	// 	good.removeOrder(this);
+	// }
 
 	public Long getId() {
 		return id;
@@ -122,8 +129,12 @@ public class Order implements Serializable {
 		return user;
 	}
 
-	public List<Good> getGoods() {
-		return goods;
+	// public List<Good> getGoods() {
+	// 	return goods;
+	// }
+
+	public List<OrderGood> getGoodItems() {
+		return goodItems;
 	}
 
 	@Override

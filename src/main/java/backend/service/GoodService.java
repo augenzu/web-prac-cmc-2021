@@ -66,4 +66,10 @@ public class GoodService {
 	public List<Good> findByPriceBetween(Double low, double high) {
 		return goodRepository.findByPriceBetween(low, high);
 	}
+
+	public boolean hasOrderEntries(Good param) {
+		// Integer num = goodRepository.numberOfUndeliveredOrderEntries(param);
+		// return num > 0 ? true : false;
+		return goodRepository.hasOrderEntries(param);
+	}
 }

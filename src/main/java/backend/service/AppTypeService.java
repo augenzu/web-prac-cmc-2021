@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import backend.entity.AppType;
-import backend.entity.Good;
 import backend.repository.AppTypeRepository;
 
 @Service
@@ -50,9 +49,5 @@ public class AppTypeService {
 
     public List<AppType> findAllByOrderByName() {
         return appTypeRepository.findAllByOrderByName();
-    }
-
-    public List<Good> findGoodsByAppTypeName(String appTypeName) {
-        return appTypeRepository.findGoodsByAppTypeName(appTypeName);
     }
 }

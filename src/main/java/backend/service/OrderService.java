@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import backend.entity.Good;
 import backend.entity.Order;
 import backend.repository.OrderRepository;
 
@@ -59,9 +58,5 @@ public class OrderService {
 
 	public List<Order> findAllByOrderByOrderedAtDesc() {
 		return orderRepository.findAllByOrderByOrderedAtDesc();
-	}
-
-	public List<Good> findOrderGoodsById(Long id) {
-		return orderRepository.findOrderGoodsById(id);
 	}
 }

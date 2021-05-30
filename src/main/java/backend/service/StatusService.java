@@ -52,6 +52,18 @@ public class StatusService {
         return statusRepository.findAllByOrderByName();
     }
 
+    public Status processing() {
+        return findByName("processing").get();
+    }
+
+    public Status complete() {
+        return findByName("complete").get();
+    }
+
+    public Status delivered() {
+        return findByName("delivered").get();
+    }
+
     public List<Order> findOrdersByStatusName(String statusName) {
         return statusRepository.findOrdersByStatusName(statusName);
     }

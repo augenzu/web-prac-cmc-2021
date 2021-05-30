@@ -17,7 +17,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import backend.Appliances;
-import backend.entity.Good;
 import backend.entity.Order;
 import backend.entity.Status;
 import backend.entity.User;
@@ -102,15 +101,5 @@ public class OrderServiceTest {
         List<Order> foundOrders = orderService.findAllByOrderByOrderedAtDesc();
 
         assertIterableEquals(orders, foundOrders);
-    }
-
-    @Test
-    @Transactional
-    public void findOrderGoodsByIdTest() {
-        Long idOfOrderContainingGooods = 2L;
-        Order orderContainingGooods = orderService.findById(idOfOrderContainingGooods).get();
-        List<Good> goods = orderContainingGooods.getGoods();
-        List<Good> foundGoods = orderService.findOrderGoodsById(idOfOrderContainingGooods);
-        assertIterableEquals(goods, foundGoods);
     }
 }
