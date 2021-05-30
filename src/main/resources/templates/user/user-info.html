@@ -50,45 +50,26 @@
                         Delete user
                     </button>
                 </form>
-                <form method="GET" action="/order-edit">
-                    <input type="hidden" name="user-id" th:value="${user.id}">
-                    <button id="make-order-button" class="btn" type="submit">
-                        Make order for this user
-                    </button>
-                </form>
             </div>
             <br>
             <div id="user-orders">
                 <h3>User orders</h3>
-                <br>
                 <table>
                     <tr>
-                        <th>order time</th>
-                        <th>status</th>
+                        <th>ordered at</th>
                         <th>delivery address</th>
                         <th>delivery date</th>
-                        <th>change status</th>
+                        <th>status</th>
                     </tr>
                     <th:block th:each="order : ${orders}">
                         <tr>
+                            <td th:text="${order.orderedAt}"></td>
+                            <td th:text="${order.deliveryAddress}"></td>
+                            <td th:text="${order.deliverOn}"></td>
                             <td>
-                                <span th:text="${order.orderedAt}"></span>
-                            </td>
-                            <td>
-                                <span th:text="${order.status.name}"></span>
-                            </td>
-                            <td>
-                                <span th:text="${order.deliveryAddress}"></span>
-                            </td>
-                            <td>
-                                <span th:text="${order.deliverOn}"></span>
-                            </td>
-                            <td>
-                                <form method="dialog" action="/order-edit">
-                                    <button id="change-order-status-button" class="btn" type="submit">
-                                        Change status
-                                    </button>
-                                </form>
+                                <a th:href="'/order-info?order-id=' + ${order.id}">
+                                    <span th:text="${order.status.name}"></span>
+                                </a>
                             </td>
                         </tr>
                     </th:block>
