@@ -1,7 +1,11 @@
 package backend.controller;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +32,27 @@ public class GoodController {
         List<Good> goods = goodService.findAllByOrderByName();
         model.addAttribute("goods", goods);
         return "good/goods";
+    }
+
+    @GetMapping("/goods-found")
+    public String getGoodsByQuery(@RequestParam(name = "good-query") String query,
+            Model model) {
+        List<Good> foundByName = goodService.findByNameContaining(query);
+        List<Good> foundByCompany = goodService.findByCompanyContaining(query);
+        List<Good> foundByAssemblyPlace = goodService.findByAssemblyPlaceContaining(query);
+        List<Good> foundByDescription = goodService.findByDescriptionContaining(query);
+
+        Set<Good> foundGoods = Stream.of(
+                foundByName,
+                foundByCompany,
+                foundByAssemblyPlace,
+                foundByDescription)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
+
+        model.addAttribute("goods", foundGoods);
+        model.addAttribute("query", new ErrorMsg(query));
+        return "good/goods-found";
     }
 
     @GetMapping("/good-info")

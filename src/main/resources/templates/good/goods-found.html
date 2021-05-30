@@ -2,14 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Goods</title>
+        <title>Goods Found</title>
         <link href="css/common.css" rel="stylesheet">
     </head>
     <body>
         <header class="page-heading">
-            <h1>
-                Goods
-            </h1>
+            <h2>
+                Goods found by query
+                <span th:text="' [' + ${query.message} + ']'"></span>
+            </h2>
         </header>
         <aside class="sidebar">
             <ul class="navigation">
@@ -28,11 +29,6 @@
             </ul>
         </aside>
         <div class="page-content">
-            <form method="GET" action="/goods-found">
-                <label for="good-query">Search:</label>
-                <input id="good-query" type="search" name="good-query" required value="coffeemaker">
-            </form>
-            <br>
             <div id="goods-list">
                 <table>
                     <tr>
@@ -59,12 +55,6 @@
                     </th:block>
                 </table>
             </div>
-            <br>
-            <form method="GET" action="/good-edit">
-                <button id="add-good-button" class="btn" type="submit">
-                    Add good
-                </button>
-            </form>
         </div>
     </body>
 </html>
