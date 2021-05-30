@@ -2,12 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Users</title>
+        <title>Add New Order</title>
+        <link href="css/common.css" rel="stylesheet">
     </head>
     <body>
         <header class="page-heading">
             <h1>
-                Users
+                Add new order
             </h1>
         </header>
         <aside class="sidebar">
@@ -27,7 +28,14 @@
             </ul>
         </aside>
         <div class="page-content">
-            Page Content
+            <div id="start-selecting-items">
+                <form method="GET" action="/item-add">
+                    Your basket is now empty. Start selecting items:
+                    <button id="start-selecting-items-button" class="btn" type="submit">
+                        Go
+                    </button>
+                </form>
+            </div>
         </div>
     </body>
 </html>
