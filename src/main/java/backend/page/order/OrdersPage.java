@@ -28,9 +28,4 @@ public class OrdersPage extends TemplatePage {
         linksToOrderPages.get(0).click();
         return new OrderInfoPage(driver);
     }
-
-    public OrderInfoPage goToNthOrderInListPage(int index) {
-        linksToOrderPages.get(index).click();
-        return new OrderInfoPage(driver);
-    }
 }

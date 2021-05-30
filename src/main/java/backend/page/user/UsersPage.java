@@ -28,9 +28,4 @@ public class UsersPage extends TemplatePage {
         linksToUserPages.get(0).click();
         return new UserInfoPage(driver);
     }
-
-    public UserInfoPage goToNthUserInListPage(int index) {
-        linksToUserPages.get(index).click();
-        return new UserInfoPage(driver);
-    }
 }
