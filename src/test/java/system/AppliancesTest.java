@@ -141,10 +141,21 @@ public class AppliancesTest extends SeleniumTest{
         goodsFoundPage.isAt();
         assertEquals(4, goodsFoundPage.getGoodsFoundNumber());
 
-
         goodsPage = goodsFoundPage.goToGoodsPage();
         goodsPage.isAt();
         goodsFoundPage = goodsPage.searchForGoodsByQuery("no-such-good");
+        goodsFoundPage.isAt();
+        assertEquals(0, goodsFoundPage.getGoodsFoundNumber());
+
+        goodsPage = goodsFoundPage.goToGoodsPage();
+        goodsPage.isAt();
+        goodsFoundPage = goodsPage.searchForGoodsByQuery("germany");
+        goodsFoundPage.isAt();
+        assertEquals(2, goodsFoundPage.getGoodsFoundNumber());
+
+        goodsPage = goodsFoundPage.goToGoodsPage();
+        goodsPage.isAt();
+        goodsFoundPage = goodsPage.searchForGoodsByQuery("huawei");
         goodsFoundPage.isAt();
         assertEquals(0, goodsFoundPage.getGoodsFoundNumber());
     }
