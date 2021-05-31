@@ -116,14 +116,14 @@ postgres=# create user admin superuser password 'admin';
     ```
     [user@domain:~/appliances] mvn package
     ```  
-    2. Собственно, создать образ согласно ``Dockerfile``:  
+    2. Собственно, создать образ (для этого написан файл сборки ``Dockerfile``) и залить его на [Dockerhub](https://hub.docker.com/, "Dockerhub"):  
     ```  
     [user@domain:~/appliances] sudo docker build . --tag appliances-online-store
     [user@domain:~/appliances] sudo docker image tag appliances-online-store augenzu/appliances-online-store:latest
     [user@domain:~/appliances] sudo docker login
     [user@domain:~/appliances] sudo docker image push augenzu/appliances-online-store:latest  
     ```  
-    3. Теперь образ можно установить с помощью команды  
+    3. Теперь образ можно устанавливать куда угодно с помощью команды  
     ```  
     sudo docker pull augenzu/appliances-online-store
     ```  
@@ -138,8 +138,8 @@ postgres=# create user admin superuser password 'admin';
     ```
     [user@domain:~/appliances] sudo docker run --rm --net=host --detach augenzu/appliances-online-store 
     ```  
-    После этого остановить (и удалить) его можно, например, вот так:  
+    После этого остановить (и удалить) его можно, например, так:  
     ```
     [user@domain:~/appliances] sudo docker stop $(sudo docker ps -a -q)  # остановит все запущенные контейнеры
-    [user@domain:~/appliances] sudo docker rm $(sudo docker ps -a -q)  # удалит их
+    [user@domain:~/appliances] sudo docker rm $(sudo docker ps -a -q)    # удалит все контейнеры
     ```  
