@@ -19,8 +19,6 @@ public interface GoodRepository extends JpaRepository<Good, Long> {
 
     List<Good> findByDescriptionContainingIgnoreCase(String part);
 
-    List<Good> findByPriceBetween(Double low, double high);
-
     @Query("select count(*) > 0 from OrderGood entry where entry.good = :param")
     Boolean hasOrderEntries(@Param("param") Good param);
 }

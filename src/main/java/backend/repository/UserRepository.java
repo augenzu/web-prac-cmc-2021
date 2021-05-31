@@ -10,10 +10,6 @@ import backend.entity.Order;
 import backend.entity.User;
  
 public interface UserRepository extends JpaRepository<User, Long> {
-  List<User> findByNameContainingIgnoreCase(String name);
-
-  List<User> findByEmailIgnoreCase(String email);
-
   List<User> findAllByOrderByName();
 
   @Query("select u.orders from User u where u.id = :id")

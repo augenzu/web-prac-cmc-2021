@@ -77,10 +77,6 @@ public class Order implements Serializable {
 		return orderedAt;
 	}
 
-	public void setOrderedAt(LocalDateTime orderedAt) {
-		this.orderedAt = orderedAt;
-	}
-
 	public Status getStatus() {
 		return status;
 	}
@@ -95,16 +91,8 @@ public class Order implements Serializable {
 		return deliveryAddress;
 	}
 
-	public void setDeliveryAddress(String deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
-	}
-
 	public LocalDate getDeliverOn() {
 		return deliverOn;
-	}
-
-	public void setDeliverOn(LocalDate deliverOn) {
-		this.deliverOn = deliverOn;
 	}
 
 	public User getUser() {

@@ -1,13 +1,11 @@
 package backend.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import backend.entity.Order;
 import backend.entity.Status;
 import backend.repository.StatusRepository;
 
@@ -30,7 +28,7 @@ public class StatusService {
 
     @Modifying
     public Optional<Status> update(Status newStatus) {
-        Optional<Status> oldStatus = findById(newStatus.getId());
+        Optional<Status> oldStatus = findByName(newStatus.getName());
 
         if (oldStatus.isPresent()) {
             Status savedStatus = save(newStatus);
@@ -40,16 +38,8 @@ public class StatusService {
         }
     }
 
-    public Optional<Status> findById(Long id) {
-        return statusRepository.findById(id);
-    }
-
     public Optional<Status> findByName(String name) {
         return statusRepository.findByName(name);
-    }
-    
-    public List<Status> findAllByOrderByName() {
-        return statusRepository.findAllByOrderByName();
     }
 
     public Status processing() {
@@ -62,9 +52,5 @@ public class StatusService {
 
     public Status delivered() {
         return findByName("delivered").get();
-    }
-
-    public List<Order> findOrdersByStatusName(String statusName) {
-        return statusRepository.findOrdersByStatusName(statusName);
     }
 }

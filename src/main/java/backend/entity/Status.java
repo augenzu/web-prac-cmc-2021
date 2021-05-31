@@ -64,10 +64,6 @@ public class Status implements Serializable {
 		this.name = name;
 	}
 
-    public List<Order> getOrders() {
-		return orders;
-	}
-
     @Override
     public int hashCode() {
        final int prime = 31;

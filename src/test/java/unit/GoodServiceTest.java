@@ -115,21 +115,4 @@ public class GoodServiceTest {
         List<Good> notFoundGoods = goodService.findByDescriptionContaining("no_goods_found");
         assertTrue(notFoundGoods.isEmpty());
     }
-
-    @Test
-    @Transactional
-    @Rollback
-    public void findByPriceBetweenTest() {
-        AppType microwaveAppType = appTypeService.findByName("microwave").get();
-        Good good = new Good(microwaveAppType, "some name",
-                42.42, null, null, 42, null);
-        Good savedGood = goodService.save(good);
-
-        List<Good> foundGoods = goodService.findByPriceBetween(42.0, 42.42);
-        assertEquals(1, foundGoods.size());
-        assertEquals(savedGood, foundGoods.toArray()[0]);
-
-        List<Good> notFoundGoods = goodService.findByPriceBetween(0.0, 0.0);
-        assertTrue(notFoundGoods.isEmpty());
-    }
 }

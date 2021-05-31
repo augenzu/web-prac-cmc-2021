@@ -51,14 +51,6 @@ public class UserService {
 		return userRepository.findAllByOrderByName();
 	}
 
-	public List<User> findByNameContaining(String name) {
-		return userRepository.findByNameContainingIgnoreCase(name);
-	}
-
-	public List<User> findByEmail(String email) {
-		return userRepository.findByEmailIgnoreCase(email);
-	}
-
 	public List<Order> findUserOrdersById(Long id) {
 		return userRepository.findUserOrdersById(id);
 	}

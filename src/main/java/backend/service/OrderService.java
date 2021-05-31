@@ -1,6 +1,5 @@
 package backend.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +23,6 @@ public class OrderService {
 		return orderRepository.save(order);
 	}
 
-	public List<Order> saveAll(List<Order> orders) {
-		return orderRepository.saveAll(orders);
-	}
-
 	public void delete(Order order) {
         orderRepository.delete(order);
     }
@@ -46,14 +41,6 @@ public class OrderService {
 
 	public Optional<Order> findById(Long id) {
 		return orderRepository.findById(id);
-	}
-
-	public List<Order> findAll() {
-		return orderRepository.findAll();
-	}
-
-	public List<Order> findByOrderedAtBetweenOrderByOrderedAtDesc(LocalDateTime beg, LocalDateTime end) {
-		return orderRepository.findByOrderedAtBetweenOrderByOrderedAtDesc(beg, end);
 	}
 
 	public List<Order> findAllByOrderByOrderedAtDesc() {

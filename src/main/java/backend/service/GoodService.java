@@ -67,10 +67,6 @@ public class GoodService {
 		return goodRepository.findByDescriptionContainingIgnoreCase(part);
 	}
 
-	public List<Good> findByPriceBetween(Double low, double high) {
-		return goodRepository.findByPriceBetween(low, high);
-	}
-
 	public boolean hasOrderEntries(Good param) {
 		return goodRepository.hasOrderEntries(param);
 	}

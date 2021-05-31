@@ -2,11 +2,9 @@ package unit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,36 +68,9 @@ public class OrderServiceTest {
     }
 
     @Test
-    @Transactional
-    @Rollback
-    public void findByOrderedAtBetweenOrderByOrderedAtDescTest() {
-        User user = new User("userName", "userAddress", "userEmail", null);
-        User savedUser = userService.save(user);
-        Status processingStatus = statusService.findByName("processing").get();
-        LocalDateTime veryDistantDateTime = LocalDateTime.now().plusYears(1000);
-
-        List<Order> orders = new ArrayList<>();
-        orders.add(new Order(veryDistantDateTime.plusYears(1),
-                processingStatus, "someDeliveryAddress", null, savedUser));
-        orders.add(new Order(veryDistantDateTime,
-                processingStatus, "someDeliveryAddress", null, savedUser));
-        List<Order> savedOrders = orderService.saveAll(orders);
-
-        LocalDateTime beg = veryDistantDateTime.minusYears(10);
-        LocalDateTime end = veryDistantDateTime.plusYears(10);
-        List<Order> foundOrders = orderService.findByOrderedAtBetweenOrderByOrderedAtDesc(beg, end);
-
-        assertIterableEquals(savedOrders, foundOrders);
-    }
-
-    @Test
     public void findAllByOrderByOrderedAtDescTest() {
-        LocalDateTime beg = LocalDateTime.now().minusYears(1000);
-        LocalDateTime end = LocalDateTime.now().plusYears(1000);
-        List<Order> orders = orderService.findByOrderedAtBetweenOrderByOrderedAtDesc(beg, end);
-
+        Integer totalOrdersAmount = 7;
         List<Order> foundOrders = orderService.findAllByOrderByOrderedAtDesc();
-
-        assertIterableEquals(orders, foundOrders);
+        assertEquals(totalOrdersAmount, foundOrders.size());
     }
 }
