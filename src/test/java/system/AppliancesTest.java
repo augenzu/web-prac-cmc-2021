@@ -74,6 +74,8 @@ public class AppliancesTest extends SeleniumTest{
         User originalUser = new User("Trillian", "Earth", "tricia@mcmillan.com", "911");
         UserInfoPage originalUserInfoPage = userAddPage.addOrUpdateUser(originalUser);
         originalUserInfoPage.isAt();
+        // check that new user has no orders
+        assertEquals(0, originalUserInfoPage.getOrdersListSize());
         String savedUserInfo = originalUserInfoPage.getDisplayedUserInfo();
         assertThatInfoCorrespondsToUser(savedUserInfo, originalUser);
 
@@ -230,5 +232,54 @@ public class AppliancesTest extends SeleniumTest{
         userInfoPage.isAt();
         Integer newNumberOfOrders = userInfoPage.getOrdersListSize();
         assertEquals(oldNumberOfOrders + 1, newNumberOfOrders);
+    }
+
+    @Test
+    public void wrongUrlTest() {
+        // non-existing user
+        String nonExistingUserInfoUrl = "http://localhost:8080/user-info?user-id=42";
+        String nonExistingUserEditUrl = "http://localhost:8080/user-edit?user-id=42";
+        String nonExistingUserResponse = "There is no user with id=42";
+
+        driver.get(nonExistingUserInfoUrl);
+        InvalidActionPage invalidActionPage = new InvalidActionPage(driver);
+        invalidActionPage.isAt();
+        assertEquals(nonExistingUserResponse, invalidActionPage.getDisplayedErrorMessage());
+
+        driver.get(nonExistingUserEditUrl);
+        invalidActionPage = new InvalidActionPage(driver);
+        invalidActionPage.isAt();
+        assertEquals(nonExistingUserResponse, invalidActionPage.getDisplayedErrorMessage());
+
+        // non-existing good
+        String nonExistingGoodInfoUrl = "http://localhost:8080/good-info?good-id=42";
+        String nonExistingGoodEditUrl = "http://localhost:8080/good-edit?good-id=42";
+        String nonExistingGoodResponse = "There is no good with id=42";
+
+        driver.get(nonExistingGoodInfoUrl);
+        invalidActionPage = new InvalidActionPage(driver);
+        invalidActionPage.isAt();
+        assertEquals(nonExistingGoodResponse, invalidActionPage.getDisplayedErrorMessage());
+
+        driver.get(nonExistingGoodEditUrl);
+        invalidActionPage = new InvalidActionPage(driver);
+        invalidActionPage.isAt();
+        assertEquals(nonExistingGoodResponse, invalidActionPage.getDisplayedErrorMessage());
+
+        // non-existing order
+        String nonExistingOrderInfoUrl = "http://localhost:8080/order-info?order-id=100500";
+        String nonExistingOrderResponse = "There is no order with id=100500";
+        driver.get(nonExistingOrderInfoUrl);
+        invalidActionPage = new InvalidActionPage(driver);
+        invalidActionPage.isAt();
+        assertEquals(nonExistingOrderResponse, invalidActionPage.getDisplayedErrorMessage());
+
+        // order for non-existing user
+        String orderWithNonExistingGoodIdUrl
+                = "http://localhost:8080/order-show-basket?good-id=42&item-number=5";
+        driver.get(orderWithNonExistingGoodIdUrl);
+        invalidActionPage = new InvalidActionPage(driver);
+        invalidActionPage.isAt();
+        assertEquals(nonExistingGoodResponse, invalidActionPage.getDisplayedErrorMessage());
     }
 }
