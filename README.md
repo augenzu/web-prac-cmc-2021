@@ -30,7 +30,7 @@
 
 Также на **Main page** можно перейти со всех страниц, кроме страниц редактирования и удаления, а также страниц, связанных с оформлением заказа (то есть переход осуществляется cо страниц **Goods page**, **Good info page**, **Users page**, **User info page**, **Orders page** и **Order info page**).  
 
-## Сценарии использования
+## Use cases
 Стрелкой (→) обозначается переход на другую страницу, дефисом (-) страница соединяется с кнопкой/ссылкой, которая на ней находится.
 * **Добавление нового клиента**  
     *Main page - Users → Users page - Add user*
@@ -50,16 +50,16 @@
     *Main page - Goods → Goods page - Search panel → Good info page - Edit*
 * **Оформление заказа**  
     *Main page - Orders → Orders page - Checkout → Checkout page*
-    1. *- Specify user*
-    2. *- Add item → Item selection page - Search panel → Checkout page*
-    3. *повторять пункт 2 до тех пор, пока не добавлены все необходимые товары*
+    1. *- Add item → Item selection page - Search panel → Checkout page*
+    2. *повторять пункт 2 до тех пор, пока не добавлены все необходимые товары*
+    3. *- Specify user*
     4. *- Checkout*
 * **Проверка статуса заказа**  
     *Main page - Orders → Orders page - Order info page*
 * **Получение списка товаров по типам (производителям, характеристикам и т. д.)**  
     *Main page - Goods → Goods page - Search panel*
 
-## Сборка и тестирование  
+## Build & Test  
 
 ### Дополнительные требования  
 
@@ -71,12 +71,12 @@
 ```
 postgres=# create user admin superuser password 'admin';
 ```
-### Цикл сборки  
+### Build Lifecycle  
 
 Приложение собирается с помощью фреймворка [Apache Maven](https://maven.apache.org/ "Apache Maven"), поэтому доступны все этапы [основного цикла сбоки maven](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#a-build-lifecycle-is-made-up-of-phases "Maven Build Lifecycle"). В частности,  
 ```
 [user@domain:~/appliances] mvn compile  # компиляция исходного кода  
-[user@domain:~/appliances] mvn test     # запуск юнит-тестов 
+[user@domain:~/appliances] mvn test     # запуск тестов 
 ```  
 
 ### Генерация покрытия  
@@ -84,8 +84,62 @@ postgres=# create user admin superuser password 'admin';
 Для создания code coverage используется фреймворк [Jacoco](https://www.jacoco.org/jacoco/ "Jacoco"). Покрытие автоматически генерируется при запуске тестов.  
 Вся информация о покрытии помещается в папку ``appliances/target/site/jacoco``. Наиболее наглядным является отчет в html-формате (``appliances/target/site/jacoco/index.html`` и дальше по ссылкам).  
 
-### Примеры страниц отчета о покрытии
+## Системное тестирование  
 
-![Jacoco report, main page](images/jacoco-report-main-page.png)  
+Системные тесты написаны с помощью фреймворка [Selenium](https://www.selenium.dev/, "Selenium"), а также с использованием паттерна [Page Object](https://www.selenium.dev/documentation/en/guidelines_and_recommendations/page_object_models/, "Page Object Pattern").  
+Запустить тесты можно командой  
+```
+[user@domain:~/appliances] mvn test
+```  
 
-![Jacoco report, entity.service](images/jacoco-report-entity-service.png) 
+## Frontend  
+
+Страницы приложения написаны на HTML с использованием шаблонизатора [Thymeleaf](https://www.thymeleaf.org/, "Thymeleaf Template Engine").
+
+## Run & Deploy  
+
+### Spring Boot & Tomcat  
+
+Приложение можно запустить локально с помощью цели ``run`` плагина maven [Spring Boot](https://spring.io/projects/spring-boot "Spring Boot"):  
+
+```
+[user@domain:~/appliances] mvn spring-boot:run
+```  
+При этом приложение развернется в [контейнере сервлетов](https://en.wikipedia.org/wiki/Web_container, "Web Container") [Apache Tomcat](https://tomcat.apache.org/, "Apache Tomcat"). В этом случае сборку нужно выполнять из ветки ``master``, при этом очистка и  инициализация тестовой базы данных выполняются автоматически.  
+
+### Docker  
+
+* **Создание образа**  
+
+    Для создания [docker](https://en.wikipedia.org/wiki/Web_container, "docker")-образа необходимо проделать следующее:  
+    1. Собрать приложение из ветки ``deploy`` с помощью команды  
+    ```
+    [user@domain:~/appliances] mvn package
+    ```  
+    2. Собственно, создать образ (для этого написан файл сборки ``Dockerfile``) и залить его на [Dockerhub](https://hub.docker.com/, "Dockerhub"):  
+    ```  
+    [user@domain:~/appliances] sudo docker build . --tag appliances-online-store
+    [user@domain:~/appliances] sudo docker image tag appliances-online-store augenzu/appliances-online-store:latest
+    [user@domain:~/appliances] sudo docker login
+    [user@domain:~/appliances] sudo docker image push augenzu/appliances-online-store:latest  
+    ```  
+    3. Теперь образ можно устанавливать куда угодно с помощью команды  
+    ```  
+    sudo docker pull augenzu/appliances-online-store
+    ```  
+
+* **Предварительная инициализация базы данных**  
+
+    Перез запуском приложения необходимо создать и заполнить базу данных, а также создать пользователя с необходимыми правами для дальнейшего взаимодействия с базой данных. Все инструкции последовательно описаны в файле ``db-init-instructions.txt`` и заключаются в выполнении нескольких sql-скриптов.  
+
+* **Запуск**  
+
+    Контейнер запускается командой  
+    ```
+    [user@domain:~/appliances] sudo docker run --rm --net=host --detach augenzu/appliances-online-store 
+    ```  
+    После этого остановить (и удалить) его можно, например, так:  
+    ```
+    [user@domain:~/appliances] sudo docker stop $(sudo docker ps -a -q)  # остановит все запущенные контейнеры
+    [user@domain:~/appliances] sudo docker rm $(sudo docker ps -a -q)    # удалит все контейнеры
+    ```  
