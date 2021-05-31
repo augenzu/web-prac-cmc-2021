@@ -1,0 +1,9 @@
+psql -U postgres         # connect to postgres database
+
+\i db/drop-db.sql        # drop database appliances if exists
+\i db/create-db.sql      # create database appliances
+\c appliances            # connect to database appliances
+\i db/create-tables.sql  # create necessary tables
+\i db/populate-db.sql    # fill the tables with test data
+
+\i db/create-admin       # create a user for further interaction with database appliances
