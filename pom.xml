@@ -61,25 +61,11 @@
     <postgresql.username>admin</postgresql.username>
     <postgresql.password>admin</postgresql.password>
 
-    <project.db.dir>${project.basedir}/db</project.db.dir>
-    <create-db.script>${project.db.dir}/create-db.sql</create-db.script>
-    <create-tables.script>${project.db.dir}/create-tables.sql</create-tables.script>
-    <populate-db.script>${project.db.dir}/populate-db.sql</populate-db.script>
-    <drop-db.script>${project.db.dir}/drop-db.sql</drop-db.script>
-
     <hibernate-entitymanager.version>5.4.29.Final</hibernate-entitymanager.version>
     <hibernate-core.version>5.4.29.Final</hibernate-core.version>
     <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
 
-    <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-    <junit5.version>5.8.0-M1</junit5.version>
-    <selenium.version>3.141.59</selenium.version>
-    <!-- do not perform system testing on test-classes of this package  -->
-    <test.unit.dir>unit</test.unit.dir>
-
     <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
-    <!-- exclude classes of this package from codecov report -->
-    <backend.entity.dir>backend/entity</backend.entity.dir>
 
   </properties>
 
@@ -111,128 +97,8 @@
       </plugin>
 
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>sql-maven-plugin</artifactId>
-        <version>${sql-maven-plugin.version}</version>
-        <dependencies>
-          <dependency>
-         		<groupId>org.postgresql</groupId>
-          	<artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <driver>${postgresql.driver}</driver>
-          <username>${postgresql.username}</username>
-          <password>${postgresql.password}</password>
-        </configuration>
-        <executions>
-          <execution>
-            <id>drop-db</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <autocommit>true</autocommit>
-              <url>
-                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.postgres}
-              </url>
-              <srcFiles>
-                <srcFile>${drop-db.script}</srcFile>
-              </srcFiles>
-            </configuration>
-          </execution>
-          <execution>
-            <id>create-db</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-							<autocommit>true</autocommit>
-              <url>
-                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.postgres}
-              </url>
-              <srcFiles>
-                <srcFile>${create-db.script}</srcFile>
-              </srcFiles>
-            </configuration>
-          </execution>
-          <execution>
-            <id>create-tables</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <url>
-                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.appliances}
-              </url>
-              <srcFiles>
-                <srcFile>${create-tables.script}</srcFile>
-              </srcFiles>
-            </configuration>
-          </execution>
-          <execution>
-            <id>populate-db</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <url>
-                jdbc:postgresql://${postgresql.host}:${postgresql.port}/${postgresql.database.appliances}
-              </url>
-              <srcFiles>
-                <srcFile>${populate-db.script}</srcFile>
-              </srcFiles>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire-plugin.version}</version>
-        <configuration>
-          <skipTests>${false}</skipTests>
-          <excludes>
-            <exclude>**/${test.unit.dir}/*Test.class</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-
-      <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco-maven-plugin.version}</version>
-        <configuration>
-          <excludes>
-            <exclude>**/${backend.entity.dir}/*.class</exclude>
-          </excludes>
-        </configuration>
-        <executions>
-          <execution>
-            <id>prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
 
     </plugins>
@@ -279,48 +145,9 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.junit.vintage</groupId>
-          <artifactId>junit-vintage-engine</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit5.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit5.version}</version>
-    </dependency>
-
   <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
-  </dependency>
-
-  <dependency>
-    <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-chrome-driver</artifactId>
-    <version>3.9.1</version>
-  </dependency>
-  <dependency>
-    <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-firefox-driver</artifactId>
-    <version>3.9.1</version>
-  </dependency>
-  <dependency>
-    <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-java</artifactId>
-    <version>3.9.1</version>
   </dependency>
 
   </dependencies>
